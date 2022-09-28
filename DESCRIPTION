@@ -1,0 +1,18 @@
+Package: psifrr
+Title: Analysis and visualization of free recall data
+Version: 0.1.0
+Authors@R:
+    person("Neal", "Morton", , "mortonne@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2631-2710"))
+Description: Psifr has tools to visualize recall sequences, to make it easier 
+    to see general trends in the data. Psifr also provides targeted analyses 
+    to examine factors that may affect recall, such as recency, primacy, 
+    temporal contiguity, stimulus category, and semantic relatedness. Analyses 
+    are customizable, allowing flexible filtering of included data to help 
+    answer precise questions. Extensive automated testing is used to ensure 
+    the consistency and correctness of analysis results.
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Imports: 
+    reticulate
