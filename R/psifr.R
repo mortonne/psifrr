@@ -1,9 +1,13 @@
 fr <- reticulate::import("psifr.fr")
+
+
 #' Load a sample dataset
+#' 
+#' Load one of the included sample datasets.
 #'
-#' @param study Study to load (options: "Morton2013")
+#' @param study Study to load (options: "Morton2013").
 #'
-#' @return data.frame
+#' @return A data.frame with data from the specified `study`.
 #' @export
 #'
 #' @examples
