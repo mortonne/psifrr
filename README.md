@@ -13,11 +13,26 @@ using the `reticulate` package.
 
 ## Installation
 
-You can install the development version of psifrr from
-[GitHub](https://github.com/) with:
+First, install `devtools` and `reticulate`:
 
 ``` r
-# install.packages("devtools")
+install.packages("reticulate")
+install.packages("devtools")
+```
+
+Follow the `reticulate` package
+[documentation](https://rstudio.github.io/reticulate/index.html) to set
+up a Python environment.
+
+Next, install the Psifr Python package:
+
+``` r
+py_install("git+https://github.com/mortonne/psifr.git@reticulate", pip=TRUE)
+```
+
+Finally, install psifrr from [GitHub](https://github.com/) with:
+
+``` r
 devtools::install_github("mortonne/psifrr")
 ```
 
