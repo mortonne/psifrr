@@ -173,3 +173,42 @@ filter_data <- function(data, ...) {
 reset_list <- function(data) {
   fr$reset_list(data)
 }
+
+
+#' Convert data to split format.
+#'
+#' Convert study, recall, or all events to list format.
+#'
+#' @param frame Free recall data with separate study and recall events.
+#' @param phase Phase of free recall ('study' or 'recall') to split. If ‘raw’,
+#'   all trials will be included.
+#' @param keys Data columns to include in the split data. If not specified, all
+#'   columns will be included.
+#' @param names Name for each column in the returned split data. Default is to
+#'   use the same names as the input columns.
+#' @param item_query Query string to select study trials to include.
+#'
+#' @return Data in split format. Each included column will be a key in the
+#'   named list.
+#'
+#' @export
+#' @examples
+#' # Create raw and merged data
+#' list_subject <- list(1, 1)
+#' study <- list(list("absence", "hollow"), list("fountain", "piano"))
+#' recall <- list(list("absence"), list("piano", "fountain"))
+#' raw <- table_from_lists(list_subject, study, recall)
+#' data <- merge_free_recall(raw)
+#'
+#' # Get study events split by list, just including the list and item fields.
+#' split_lists(data, "study", keys = list("list", "item"), as_list = TRUE)
+#'
+#' # Export recall events, split by list.
+#' split_lists(data, "recall", keys = list("item"), as_list = TRUE)
+#'
+#' # Raw events (i.e., events that haven’t been scored) can also be exported to
+#' # list format.
+#' split_lists(raw, "raw", keys = list("position"))
+split_lists <- function(...) {
+  fr$split_lists(...)
+}
