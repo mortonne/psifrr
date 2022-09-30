@@ -25,6 +25,10 @@ sample_data <- function(study) {
 #' @param recall List of recalled items for each study list.
 #' @param lists List of list numbers. If not specified, lists for each subject
 #'   will be numbered sequentially starting from one.
+#' @param ... Additional arguments specify additional columns. Each must be a
+#'   list where the first item indicates study list values and the second item 
+#'   indicates recall list values. If either item is NULL, that column will be
+#'   undefined for that phase.
 #'
 #' @return Data in table format.
 #' @export
