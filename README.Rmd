@@ -45,11 +45,28 @@ Finally, install psifrr from [GitHub](https://github.com/) with:
 devtools::install_github("mortonne/psifrr")
 ```
 
-## Example
+## Working with free recall data
 
-To load a sample dataset:
+To load a sample dataset in [Psifr format](https://psifr.readthedocs.io/en/stable/guide/import.html):
 
-```{r example}
+```{r}
 library(psifrr)
 raw <- sample_data("Morton2013")
+head(raw)
 ```
+
+To analyze a dataset, we need to first score it by matching up study items to recalled items.
+See [Scoring data](https://psifr.readthedocs.io/en/stable/guide/score.html) for details.
+
+```{r}
+data <- merge_free_recall(raw)
+```
+
+We can use `filter_data` to a select one list for a sample of what the results look like:
+
+```{r}
+filter_data(data, subjects = 1, lists = 1)
+```
+
+See [Managing data](https://psifr.readthedocs.io/en/latest/api/fr.html#managing-data)
+for a full list of functions that operate on free recall data.
