@@ -71,6 +71,36 @@ merge_free_recall <- function(data, ...) {
 }
 
 
+#' Score study and recall events
+#' 
+#' Merge separated study and recall events that have the same subject, list, 
+#' and item.
+#' 
+#' @param study Information about all study events. 
+#'   Should have one row for each study event.
+#' @param recall Information about all recall events. 
+#'   Should have one row for each recall attempt.
+#' @param merge_keys Columns to use to designate events to merge. 
+#'   Default is list(‘subject’, ‘list’, ‘item’), which will merge events 
+#'   related to the same item, but only within list.
+#' @param list_keys Columns that apply to both study and recall events.
+#' @param study_keys Columns that only apply to study events.
+#' @param recall_keys Columns that only apply to recall events.
+#' @param position_key Column indicating the position of each item in either 
+#'   the study list or the recall sequence.
+#'
+#' @return Merged information about study and recall events. Each row 
+#'   corresponds to one unique input/output pair.
+#' @export
+#' @examples
+#' study <- data.frame(subject = c(1, 1), list = c(1, 1), position = c(1, 2), item = c('a', 'b'))
+#' recall <-  data.frame(subject = 1, list = 1, position = 1, item = 'b')
+#' merge_lists(study, recall)
+merge_lists <- function(...) {
+  fr$merge_lists(...)
+}
+
+
 #' Filter free recall data
 #' 
 #' Filter raw or scored data to get a subset of trials or study/recall pairings.
