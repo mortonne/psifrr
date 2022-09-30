@@ -52,9 +52,9 @@ sample_data <- function(study) {
 #'   subjects_list, study_lists, recall_lists,
 #'   col1 = col1, col2 = col2
 #' )
-table_from_lists <- function(...) {
+table_from_lists <- function(subjects, study, recall, lists = NULL, ...) {
   fr <- reticulate::import("psifr.fr")
-  fr$table_from_lists(...)
+  fr$table_from_lists(subjects, study, recall, lists, ...)
 }
 
 
@@ -104,9 +104,22 @@ check_data <- function(data) {
 #' @examples
 #' raw <- sample_data("Morton2013")
 #' data <- merge_free_recall(raw)
-merge_free_recall <- function(data, ...) {
+merge_free_recall <- function(
+    data,
+    merge_keys = NULL,
+    list_keys = NULL,
+    study_keys = NULL,
+    recall_keys = NULL,
+    position_key = "position") {
   fr <- reticulate::import("psifr.fr")
-  fr$merge_free_recall(data, ...)
+  fr$merge_free_recall(
+    data, 
+    merge_keys = merge_keys, 
+    list_keys = list_keys, 
+    study_keys = study_keys, 
+    recall_keys = recall_keys, 
+    position_key = position_key
+  )
 }
 
 
@@ -137,9 +150,24 @@ merge_free_recall <- function(data, ...) {
 #' )
 #' recall <- data.frame(subject = 1, list = 1, position = 1, item = "b")
 #' merge_lists(study, recall)
-merge_lists <- function(...) {
+merge_lists <- function(
+    study,
+    recall,
+    merge_keys = NULL,
+    list_keys = NULL,
+    study_keys = NULL,
+    recall_keys = NULL,
+    position_key = "position") {
   fr <- reticulate::import("psifr.fr")
-  fr$merge_lists(...)
+  fr$merge_lists(
+    study,
+    recall,
+    merge_keys = merge_keys, 
+    list_keys = list_keys, 
+    study_keys = study_keys, 
+    recall_keys = recall_keys, 
+    position_key = position_key
+  )
 }
 
 
@@ -171,9 +199,16 @@ merge_lists <- function(...) {
 #' # Filtered scored data to get subject 2
 #' data <- merge_free_recall(raw)
 #' filter_data(data, subjects = 2)
-filter_data <- function(data, ...) {
+filter_data <- function(
+    data, 
+    subjects = NULL,
+    lists = NULL,
+    trial_type = NULL,
+    positions = NULL,
+    inputs = NULL,
+    outputs = NULL) {
   fr <- reticulate::import("psifr.fr")
-  fr$filter_data(data, ...)
+  fr$filter_data(data, subjects, lists, trial_type, positions, inputs, outputs)
 }
 
 
@@ -240,7 +275,12 @@ reset_list <- function(data) {
 #' # Raw events (i.e., events that haven’t been scored) can also be exported to
 #' # list format.
 #' split_lists(raw, "raw", keys = list("position"))
-split_lists <- function(...) {
+split_lists <- function(
+    data, phase, keys = NULL, names = NULL, item_query = NULL
+  ) {
   fr <- reticulate::import("psifr.fr")
-  fr$split_lists(...)
+  fr$split_lists(
+    data, phase, 
+    keys = keys, names = names, item_query = item_query, as_list = TRUE
+  )
 }
