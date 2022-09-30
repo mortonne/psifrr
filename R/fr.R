@@ -232,10 +232,10 @@ reset_list <- function(data) {
 #' data <- merge_free_recall(raw)
 #'
 #' # Get study events split by list, just including the list and item fields.
-#' split_lists(data, "study", keys = list("list", "item"), as_list = TRUE)
+#' split_lists(data, "study", keys = list("list", "item"))
 #'
 #' # Export recall events, split by list.
-#' split_lists(data, "recall", keys = list("item"), as_list = TRUE)
+#' split_lists(data, "recall", keys = list("item"))
 #'
 #' # Raw events (i.e., events that haven’t been scored) can also be exported to
 #' # list format.
