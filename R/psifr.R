@@ -12,6 +12,7 @@ fr <- reticulate::import("psifr.fr")
 #'
 #' @examples
 #' data <- sample_data("Morton2013")
+#' head(data)
 sample_data <- function(study) {
   fr$sample_data(study)
 }
