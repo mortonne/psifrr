@@ -18,6 +18,37 @@ sample_data <- function(study) {
 }
 
 
+#' Create table format data from list format data.
+#' 
+#' Convert study and recall lists to table format.
+#' 
+#' @param subjects Subject identifier for each list.
+#' @param study List of items for each study list.
+#' @param recall List of recalled items for each study list.
+#' @param lists List of list numbers. If not specified, lists for each subject will be numbered sequentially starting from one.
+#' 
+#' @return Data in table format.
+#' @export
+#' 
+#' @examples
+#' # Create standard columns from list data.
+#' subjects_list = list(1, 1, 2, 2)
+#' study_lists = list(list('a', 'b'), list('c', 'd'), list('e', 'f'), list('g', 'h'))
+#' recall_lists = list(list('b'), list('d', 'c'), list('f', 'e'), list())
+#' table_from_lists(subjects_list, study_lists, recall_lists)
+#' 
+#' # Include non-standard columns named col1 and col2.
+#' subjects_list = list(1, 1)
+#' study_lists =list(list('a', 'b'), list('c', 'd'))
+#' recall_lists = list(list('b'), list('d', 'c'))
+#' col1 = list(list(list(1, 2), list(1, 2)), list(list(2), list(2, 1)))
+#' col2 = list(list(list(1, 1), list(2, 2)), NULL)
+#' table_from_lists(subjects_list, study_lists, recall_lists, col1=col1, col2=col2)
+table_from_lists <- function(...) {
+  fr$table_from_lists(...)
+}
+
+
 #' Score free recall data 
 #' 
 #' Merge study and recall events that have the same subject, list, and item.
@@ -37,4 +68,35 @@ sample_data <- function(study) {
 #' data <- merge_free_recall(raw)
 merge_free_recall <- function(data, ...) {
   fr$merge_free_recall(data, ...)
+}
+
+
+#' Filter free recall data
+#' 
+#' Filter raw or scored data to get a subset of trials or study/recall pairings.
+#' 
+#' @param data Raw or merged data to filter.
+#' @param subjects Subject or subjects to include.
+#' @param lists List or lists to include.
+#' @param trial_type Trial type to include.
+#' @param positions Position or positions to include.
+#' @param inputs Input position or positions to include.
+#' @param outputs Output position or positions to include.
+#' 
+#' @return The filtered subset of data.
+#' 
+#' @export
+#' @examples
+#' # Filter data to get study events for subject 1
+#' subjects_list = list(1, 1, 2, 2)
+#' study_lists = list(list('a', 'b'), list('c', 'd'), list('e', 'f'), list('g', 'h'))
+#' recall_lists = list(list('b'), list('d', 'c'), list('f', 'e'), list())
+#' raw = table_from_lists(subjects_list, study_lists, recall_lists)
+#' filter_data(raw, subjects=1, trial_type='study')
+#' 
+#' # Filtered scored data to get subject 2
+#' data = merge_free_recall(raw)
+#' filter_data(data, subjects=2)
+filter_data <- function(data, ...) {
+  fr$filter_data(data, ...)
 }
