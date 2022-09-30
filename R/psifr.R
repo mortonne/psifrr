@@ -47,7 +47,8 @@ sample_data <- function(study) {
 #' col1 <- list(list(list(1, 2), list(1, 2)), list(list(2), list(2, 1)))
 #' col2 <- list(list(list(1, 1), list(2, 2)), NULL)
 #' table_from_lists(
-#'   subjects_list, study_lists, recall_lists, col1 = col1, col2 = col2
+#'   subjects_list, study_lists, recall_lists,
+#'   col1 = col1, col2 = col2
 #' )
 table_from_lists <- function(...) {
   fr$table_from_lists(...)
@@ -147,25 +148,26 @@ filter_data <- function(data, ...) {
 
 
 #' Reset list index
-#' 
+#'
 #' Reset list numbering to be sequential starting from one.
-#' 
+#'
 #' @param df Raw or merged data. Must have subject and list fields.
-#' 
+#'
 #' @return Data with a renumbered list field, starting from 1.
-#' 
+#'
 #' @export
 #' @examples
 #' # Data where the list number does not start at 1
 #' subjects_list <- list(1, 1)
-#' study_lists <- list(list('a', 'b'), list('c', 'd'))
-#' recall_lists <- list(list('b'), list('c', 'd'))
+#' study_lists <- list(list("a", "b"), list("c", "d"))
+#' recall_lists <- list(list("b"), list("c", "d"))
 #' list_nos <- list(3, 4)
 #' raw <- table_from_lists(
-#'   subjects_list, study_lists, recall_lists, lists = list_nos
+#'   subjects_list, study_lists, recall_lists,
+#'   lists = list_nos
 #' )
 #' raw
-#' 
+#'
 #' # Reset the list number
 #' reset_list(raw)
 reset_list <- function(data) {
