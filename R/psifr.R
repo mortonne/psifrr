@@ -144,3 +144,30 @@ merge_lists <- function(...) {
 filter_data <- function(data, ...) {
   fr$filter_data(data, ...)
 }
+
+
+#' Reset list index
+#' 
+#' Reset list numbering to be sequential starting from one.
+#' 
+#' @param df Raw or merged data. Must have subject and list fields.
+#' 
+#' @return Data with a renumbered list field, starting from 1.
+#' 
+#' @export
+#' @examples
+#' # Data where the list number does not start at 1
+#' subjects_list <- list(1, 1)
+#' study_lists <- list(list('a', 'b'), list('c', 'd'))
+#' recall_lists <- list(list('b'), list('c', 'd'))
+#' list_nos <- list(3, 4)
+#' raw <- table_from_lists(
+#'   subjects_list, study_lists, recall_lists, lists = list_nos
+#' )
+#' raw
+#' 
+#' # Reset the list number
+#' reset_list(raw)
+reset_list <- function(data) {
+  fr$reset_list(data)
+}

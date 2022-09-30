@@ -3,5 +3,6 @@
 export(filter_data)
 export(merge_free_recall)
 export(merge_lists)
+export(reset_list)
 export(sample_data)
 export(table_from_lists)
