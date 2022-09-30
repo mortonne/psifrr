@@ -55,6 +55,27 @@ table_from_lists <- function(...) {
 }
 
 
+#' Check raw free recall data
+#'
+#' Run checks on raw (unmerged) free recall data.
+#'
+#' @param df Raw free recall data in standard format.
+#'
+#' @export
+#' @examples
+#' # Create data with a required column missing
+#' raw <- data.frame(
+#'   subject = list(1, 1),
+#'   list = list(1, 1),
+#'   position = list(1, 2),
+#'   item = list("a", "b")
+#' )
+#' check_data(raw)
+check_data <- function(data) {
+  fr$check_data(data)
+}
+
+
 #' Score free recall data
 #'
 #' Merge study and recall events that have the same subject, list, and item.
