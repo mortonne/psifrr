@@ -62,7 +62,7 @@ table_from_lists <- function(...) {
 #'
 #' Run checks on raw (unmerged) free recall data.
 #'
-#' @param df Raw free recall data in standard format.
+#' @param data Raw free recall data in standard format.
 #'
 #' @export
 #' @examples
@@ -181,7 +181,7 @@ filter_data <- function(data, ...) {
 #'
 #' Reset list numbering to be sequential starting from one.
 #'
-#' @param df Raw or merged data. Must have subject and list fields.
+#' @param data Raw or merged data. Must have subject and list fields.
 #'
 #' @return Data with a renumbered list field, starting from 1.
 #'
@@ -210,7 +210,7 @@ reset_list <- function(data) {
 #'
 #' Convert study, recall, or all events to list format.
 #'
-#' @param frame Free recall data with separate study and recall events.
+#' @param data Free recall data in raw or merged format.
 #' @param phase Phase of free recall ('study' or 'recall') to split. If ‘raw’,
 #'   all trials will be included.
 #' @param keys Data columns to include in the split data. If not specified, all
