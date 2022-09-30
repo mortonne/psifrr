@@ -89,7 +89,7 @@ check_data <- function(data) {
 #' @param data Free recall data in Psifr format. Must have subject, list,
 #'   trial_type, position, and item columns.
 #' @param merge_keys Columns to use to designate events to merge. Default is
-#'   [‘subject’, ‘list’, ‘item’], which will merge events related to the same
+#'   list(‘subject’, ‘list’, ‘item’), which will merge events related to the same
 #'   item, but only within list.
 #' @param list_keys Columns that apply to both study and recall events.
 #' @param study_keys Columns that only apply to study events.
