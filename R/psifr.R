@@ -1,6 +1,3 @@
-fr <- reticulate::import("psifr.fr")
-
-
 #' Load a sample dataset
 #'
 #' Load one of the included sample datasets.
@@ -14,6 +11,7 @@ fr <- reticulate::import("psifr.fr")
 #' data <- sample_data("Morton2013")
 #' head(data)
 sample_data <- function(study) {
+  fr <- reticulate::import("psifr.fr")
   fr$sample_data(study)
 }
 
@@ -51,6 +49,7 @@ sample_data <- function(study) {
 #'   col1 = col1, col2 = col2
 #' )
 table_from_lists <- function(...) {
+  fr <- reticulate::import("psifr.fr")
   fr$table_from_lists(...)
 }
 
@@ -72,6 +71,7 @@ table_from_lists <- function(...) {
 #' )
 #' check_data(raw)
 check_data <- function(data) {
+  fr <- reticulate::import("psifr.fr")
   fr$check_data(data)
 }
 
@@ -99,6 +99,7 @@ check_data <- function(data) {
 #' raw <- sample_data("Morton2013")
 #' data <- merge_free_recall(raw)
 merge_free_recall <- function(data, ...) {
+  fr <- reticulate::import("psifr.fr")
   fr$merge_free_recall(data, ...)
 }
 
@@ -131,6 +132,7 @@ merge_free_recall <- function(data, ...) {
 #' recall <- data.frame(subject = 1, list = 1, position = 1, item = "b")
 #' merge_lists(study, recall)
 merge_lists <- function(...) {
+  fr <- reticulate::import("psifr.fr")
   fr$merge_lists(...)
 }
 
@@ -164,6 +166,7 @@ merge_lists <- function(...) {
 #' data <- merge_free_recall(raw)
 #' filter_data(data, subjects = 2)
 filter_data <- function(data, ...) {
+  fr <- reticulate::import("psifr.fr")
   fr$filter_data(data, ...)
 }
 
@@ -192,6 +195,7 @@ filter_data <- function(data, ...) {
 #' # Reset the list number
 #' reset_list(raw)
 reset_list <- function(data) {
+  fr <- reticulate::import("psifr.fr")
   fr$reset_list(data)
 }
 
@@ -231,5 +235,6 @@ reset_list <- function(data) {
 #' # list format.
 #' split_lists(raw, "raw", keys = list("position"))
 split_lists <- function(...) {
+  fr <- reticulate::import("psifr.fr")
   fr$split_lists(...)
 }
