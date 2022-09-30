@@ -69,7 +69,9 @@ table_from_lists <- function(...) {
 #'   position = list(1, 2),
 #'   item = list("a", "b")
 #' )
-#' check_data(raw)
+#'
+#' # Checking this dataset will display an error
+#' # check_data(raw)
 check_data <- function(data) {
   fr <- reticulate::import("psifr.fr")
   fr$check_data(data)
