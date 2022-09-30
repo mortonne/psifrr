@@ -20,7 +20,7 @@ sample_data <- function(study) {
 
 #' Score free recall data 
 #' 
-#' Match up study and recall events that have the same subject, list, and item.
+#' Merge study and recall events that have the same subject, list, and item.
 #'
 #' @param data Free recall data in Psifr format. Must have subject, list, trial_type, position, and item columns.
 #' @param merge_keys Columns to use to designate events to merge. Default is [‘subject’, ‘list’, ‘item’], which will merge events related to the same item, but only within list.
