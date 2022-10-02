@@ -1,0 +1,17 @@
+citHeader("To cite psifrr in publications use:")
+
+citEntry(entry = "Article",
+  year = "2020",
+  title = "Psifr: Analysis and visualization of free recall data",
+  author = personList(as.person("Neal W Morton")),
+  journal = "Journal of Open Source Software",
+  doi = "10.21105/joss.02669",
+  pages = "2669",
+  number = "54",
+  volume = "5",
+  textVersion =
+  paste("Neal W Morton (2020).",
+        "Psifr: Analysis and visualization of free recall data.",
+        "Journal of Open Source Software, 5(54), 2669.",
+        "URL https://doi.org/10.21105/joss.02669.")
+)
