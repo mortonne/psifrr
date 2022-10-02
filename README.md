@@ -8,8 +8,9 @@
 
 Analysis and visualization of free recall data.
 
-PsifrR currently relies on the Psifr Python package, which is called
-from R using the `reticulate` package.
+psifrr relies on the
+[Psifr](https://psifr.readthedocs.io/en/stable/index.html) Python
+package, which is called from R using the `reticulate` package.
 
 ## Installation
 
