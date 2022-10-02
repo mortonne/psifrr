@@ -35,9 +35,10 @@ jobs:
 
       - name: Install Psifr
         run: |
-          Rscript -e "remotes::install_github('rstudio/reticulate')"
-          Rscript -e "reticulate::install_miniconda()"
-          Rscript -e "reticulate::py_install('git+https://github.com/mortonne/psifr.git@reticulate', pip=TRUE)"
+          remotes::install_github('rstudio/reticulate')
+          reticulate::install_miniconda()
+          reticulate::py_install('git+https://github.com/mortonne/psifr.git@reticulate', pip=TRUE)
+        shell: Rscript {0}
 
       - name: Build site
         run: |
