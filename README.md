@@ -23,12 +23,17 @@ install.packages("devtools")
 
 Follow the `reticulate` package
 [documentation](https://rstudio.github.io/reticulate/index.html) to set
-up a Python environment.
+up a Python environment. One option is to install Python using
+Miniconda:
+
+``` r
+reticulate::install_miniconda()
+```
 
 Next, install the Psifr Python package:
 
 ``` r
-py_install("git+https://github.com/mortonne/psifr.git@reticulate", pip=TRUE)
+reticulate::py_install("git+https://github.com/mortonne/psifr.git@reticulate", pip=TRUE)
 ```
 
 Finally, install psifrr from [GitHub](https://github.com/) with:
