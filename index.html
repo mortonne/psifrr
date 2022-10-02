@@ -75,7 +75,7 @@
 </h1>
 </div>
 <!-- badges: start --><!-- badges: end --><p>Analysis and visualization of free recall data.</p>
-<p>PsifrR currently relies on the Psifr Python package, which is called from R using the <code>reticulate</code> package.</p>
+<p>psifrr relies on the <a href="https://psifr.readthedocs.io/en/stable/index.html" class="external-link">Psifr</a> Python package, which is called from R using the <code>reticulate</code> package.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -174,6 +174,58 @@
 <span><span class="co">#&gt; 24        NaN         NaN</span></span>
 <span><span class="co">#&gt; 25        NaN         NaN</span></span></code></pre></div>
 <p>See <a href="https://psifr.readthedocs.io/en/latest/api/fr.html#managing-data" class="external-link">Managing data</a> for a full list of functions that operate on free recall data.</p>
+</div>
+<div class="section level2">
+<h2 id="recall-performance">Recall performance<a class="anchor" aria-label="anchor" href="#recall-performance"></a>
+</h2>
+<div class="section level3">
+<h3 id="serial-position-curve">Serial position curve<a class="anchor" aria-label="anchor" href="#serial-position-curve"></a>
+</h3>
+<p>We can calculate average recall for each serial position using <code>spc</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">recall</span> <span class="op">&lt;-</span> <span class="fu">spc</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">recall</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject input    recall</span></span>
+<span><span class="co">#&gt; 1       1     1 0.5416667</span></span>
+<span><span class="co">#&gt; 2       1     2 0.4583333</span></span>
+<span><span class="co">#&gt; 3       1     3 0.6250000</span></span>
+<span><span class="co">#&gt; 4       1     4 0.3333333</span></span>
+<span><span class="co">#&gt; 5       1     5 0.4375000</span></span>
+<span><span class="co">#&gt; 6       1     6 0.4791667</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="probability-of-nth-recall">Probability of Nth recall<a class="anchor" aria-label="anchor" href="#probability-of-nth-recall"></a>
+</h3>
+<p>We can also split up recalls, to test for example how likely participants were to initiate recall with the last item on the list, using <code>pnr</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nth_recall</span> <span class="op">&lt;-</span> <span class="fu">pnr</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">nth_recall</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject output input       prob actual possible</span></span>
+<span><span class="co">#&gt; 1       1      1     1 0.00000000      0       48</span></span>
+<span><span class="co">#&gt; 2       1      1     2 0.02083333      1       48</span></span>
+<span><span class="co">#&gt; 3       1      1     3 0.00000000      0       48</span></span>
+<span><span class="co">#&gt; 4       1      1     4 0.00000000      0       48</span></span>
+<span><span class="co">#&gt; 5       1      1     5 0.00000000      0       48</span></span>
+<span><span class="co">#&gt; 6       1      1     6 0.00000000      0       48</span></span></code></pre></div>
+<p>This gives us the probability of recall conditional on both output position (<code>output</code>) and serial or input position (<code>input</code>).</p>
+</div>
+<div class="section level3">
+<h3 id="prior-list-intrusions">Prior-list intrusions<a class="anchor" aria-label="anchor" href="#prior-list-intrusions"></a>
+</h3>
+<p>Participants will sometimes accidentally recall items from prior lists; these recalls are known as prior-list intrusions (PLIs). To better understand how prior-list intrusions are happening, you can look at how many lists back those items were originally presented using <code>pli_list_lag</code>.</p>
+<p>First, you need to choose a maximum list lag that you will consider. This determines which lists will be included in the analysis. For example, if you have a maximum lag of 3, then the first 3 lists will be excluded from the analysis. This ensures that each included list can potentially have intrusions of each possible list lag.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pli</span> <span class="op">&lt;-</span> <span class="fu">pli_list_lag</span><span class="op">(</span><span class="va">data</span>, max_lag <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pli</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject list_lag count   per_list       prob</span></span>
+<span><span class="co">#&gt; 1       1        1     7 0.15555556 0.25925926</span></span>
+<span><span class="co">#&gt; 2       1        2     5 0.11111111 0.18518519</span></span>
+<span><span class="co">#&gt; 3       1        3     0 0.00000000 0.00000000</span></span>
+<span><span class="co">#&gt; 4       2        1     9 0.20000000 0.19148936</span></span>
+<span><span class="co">#&gt; 5       2        2     2 0.04444444 0.04255319</span></span>
+<span><span class="co">#&gt; 6       2        3     1 0.02222222 0.02127660</span></span></code></pre></div>
+<p>The analysis returns a raw count of intrusions at each lag (<code>count</code>), the count divided by the number of included lists (<code>per_list</code>), and the probability of a given intrusion coming from a given lag (<code>prob</code>).</p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
