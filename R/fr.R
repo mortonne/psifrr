@@ -279,3 +279,22 @@ split_lists <- function(data, phase, keys = NULL, names = NULL, item_query = NUL
     keys = keys, names = names, item_query = item_query, as_list = TRUE
   )
 }
+
+#' Get the index of each item in a pool
+#'
+#' Look up the indices of multiple items in a dataset from a larger pool.
+#'
+#' @param trial_items The item presented on each trial.
+#' @param pool_items_list List of items in the full pool.
+#'
+#' @return Index of each item in the pool. Trials with items not in the pool
+#'   will be <NA>.
+#'
+#' @export
+#' @examples
+#' trial_items <- list("b", "a", "z", "c", "d")
+#' pool_items_list <- list("a", "b", "c", "d", "e", "f")
+#' pool_index(trial_items, pool_items_list)
+pool_index <- function(trial_items, pool_items_list) {
+  match(trial_items, pool_items_list)
+}
