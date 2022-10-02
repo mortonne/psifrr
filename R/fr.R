@@ -325,7 +325,7 @@ block_index <- function(list_labels) {
 #'
 #' @param data Merged study and recall data.
 #'
-#' @returns recall Results with subject, input, and recall columns.
+#' @return Results with subject, input, and recall columns.
 #'
 #' @export
 #' @examples
