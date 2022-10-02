@@ -368,3 +368,32 @@ pnr <- function(data) {
   fr <- reticulate::import("psifr.fr")
   fr$pnr(data)
 }
+
+
+#' List lag of prior-list intrusions
+#'
+#' For intrusions of items from previous lists, the lag indicating how many
+#' lists back the item was presented.
+#'
+#' @param data Merged study and recall data. Lists must be numbered starting
+#'   from 1 and all lists must be included.
+#' @param max_lag Maximum list lag to consider. The intial `max_lag` lists for
+#'   each subject will be excluded so that all considered lags are possible for
+#'   all included lists.
+#'
+#' @return Results with subject, list_lag, count, per_list, and prob columns.
+#'   Count indicates the number of intrusions with that list lag, while per_list
+#'   indicates the number of intrusions per list. The prob column indicates the
+#'   probability within each subject of a given included prior-list intrusion
+#'   occurring at that lag.
+#'
+#' @export
+#' @examples
+#' raw <- sample_data("Morton2013")
+#' data <- merge_free_recall(raw)
+#' stats <- pli_list_lag(data, max_lag = 3)
+#' head(stats)
+pli_list_lag <- function(data, max_lag) {
+  fr <- reticulate::import("psifr.fr")
+  fr$pli_list_lag(data, max_lag)
+}
