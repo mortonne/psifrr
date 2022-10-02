@@ -316,3 +316,22 @@ block_index <- function(list_labels) {
   fr <- reticulate::import("psifr.fr")
   fr$block_index(list_labels)
 }
+
+#' Serial position curve
+#'
+#' Recall probability as a function of serial position in the list.
+#'
+#' @param data Merged study and recall data.
+#'
+#' @returns recall Results with subject, input, and recall columns.
+#'
+#' @export
+#' @examples
+#' raw <- sample_data("Morton2013")
+#' data <- merge_free_recall(raw)
+#' recall <- spc(data)
+#' head(recall)
+spc <- function(data) {
+  fr <- reticulate::import("psifr.fr")
+  fr$spc(data)
+}
