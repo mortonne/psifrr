@@ -298,3 +298,21 @@ split_lists <- function(data, phase, keys = NULL, names = NULL, item_query = NUL
 pool_index <- function(trial_items, pool_items_list) {
   match(trial_items, pool_items_list)
 }
+
+
+#' Block index
+#'
+#' Get the index of each block in a list.
+#'
+#' @param list_labels Position labels that define the blocks.
+#'
+#' @return Block index of each position.
+#'
+#' @export
+#' @examples
+#' list_labels <- list(2, 2, 3, 3, 3, 1, 1)
+#' block_index(list_labels)
+block_index <- function(list_labels) {
+  fr <- reticulate::import("psifr.fr")
+  fr$block_index(list_labels)
+}
