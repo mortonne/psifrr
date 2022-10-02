@@ -364,9 +364,9 @@ spc <- function(data) {
 #' data <- merge_free_recall(raw)
 #' recall <- pnr(data)
 #' head(recall)
-pnr <- function(data) {
+pnr <- function(data, item_query = NULL, test_key = NULL, test = NULL) {
   fr <- reticulate::import("psifr.fr")
-  fr$pnr(data)
+  fr$pnr(data, item_query = item_query, test_key = test_key, test = test)
 }
 
 
