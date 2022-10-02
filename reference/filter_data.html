@@ -99,15 +99,26 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">recall_lists</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"d"</span>, <span class="st">"c"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"f"</span>, <span class="st">"e"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="table_from_lists.html">table_from_lists</a></span><span class="op">(</span><span class="va">subjects_list</span>, <span class="va">study_lists</span>, <span class="va">recall_lists</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in py_module_import(module, convert = convert):</span> ModuleNotFoundError: No module named 'psifr'</span>
 <span class="r-in"><span><span class="fu">filter_data</span><span class="op">(</span><span class="va">raw</span>, subjects <span class="op">=</span> <span class="fl">1</span>, trial_type <span class="op">=</span> <span class="st">"study"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in py_module_import(module, convert = convert):</span> ModuleNotFoundError: No module named 'psifr'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   subject list trial_type position item</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0       1    1      study        1    a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    1      study        2    b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1    2      study        1    c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1    2      study        2    d</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Filtered scored data to get subject 2</span></span></span>
 <span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="merge_free_recall.html">merge_free_recall</a></span><span class="op">(</span><span class="va">raw</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in py_module_import(module, convert = convert):</span> ModuleNotFoundError: No module named 'psifr'</span>
 <span class="r-in"><span><span class="fu">filter_data</span><span class="op">(</span><span class="va">data</span>, subjects <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in py_module_import(module, convert = convert):</span> ModuleNotFoundError: No module named 'psifr'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   subject list item input output study recall repeat intrusion prior_list</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       2    1    e     1      2  TRUE   TRUE      0     FALSE        NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       2    1    f     2      1  TRUE   TRUE      0     FALSE        NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       2    2    g     1    NaN  TRUE  FALSE      0     FALSE        NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       2    2    h     2    NaN  TRUE  FALSE      0     FALSE        NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   prior_input</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6         NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7         NaN</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

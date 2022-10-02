@@ -89,7 +89,7 @@
 <code class="sourceCode R"><span><span class="fu">py_install</span><span class="op">(</span><span class="st">"git+https://github.com/mortonne/psifr.git@reticulate"</span>, pip<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, install psifrr from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"mortonne/psifrr"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mortonne/psifrr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="working-with-free-recall-data">Working with free recall data<a class="anchor" aria-label="anchor" href="#working-with-free-recall-data"></a>
@@ -97,7 +97,7 @@
 <p>To load a sample dataset in <a href="https://psifr.readthedocs.io/en/stable/guide/import.html" class="external-link">Psifr format</a>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mortonne.github.io/psifrr/">psifrr</a></span><span class="op">)</span></span>
-<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu">sample_data</span><span class="op">(</span><span class="st">"Morton2013"</span><span class="op">)</span></span>
+<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sample_data.html">sample_data</a></span><span class="op">(</span><span class="st">"Morton2013"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">raw</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject list position trial_type       item item_number session list_type</span></span>
 <span><span class="co">#&gt; 1       1    1        1      study      TOWEL         743       1      pure</span></span>
@@ -115,10 +115,10 @@
 <span><span class="co">#&gt; 6      obj        1         1.212           obj</span></span></code></pre></div>
 <p>To analyze a dataset, we need to first score it by matching up study items to recalled items. See <a href="https://psifr.readthedocs.io/en/stable/guide/score.html" class="external-link">Scoring data</a> for details.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">merge_free_recall</span><span class="op">(</span><span class="va">raw</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/merge_free_recall.html">merge_free_recall</a></span><span class="op">(</span><span class="va">raw</span><span class="op">)</span></span></code></pre></div>
 <p>We can use <code>filter_data</code> to a select one list for a sample of what the results look like:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">filter_data</span><span class="op">(</span><span class="va">data</span>, subjects <span class="op">=</span> <span class="fl">1</span>, lists <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/filter_data.html">filter_data</a></span><span class="op">(</span><span class="va">data</span>, subjects <span class="op">=</span> <span class="fl">1</span>, lists <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    subject list          item input output study recall repeat intrusion</span></span>
 <span><span class="co">#&gt; 0        1    1         TOWEL     1     13  TRUE   TRUE      0     FALSE</span></span>
 <span><span class="co">#&gt; 1        1    1         LADLE     2    NaN  TRUE  FALSE      0     FALSE</span></span>
@@ -183,7 +183,7 @@
 </h3>
 <p>We can calculate average recall for each serial position using <code>spc</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">recall</span> <span class="op">&lt;-</span> <span class="fu">spc</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">recall</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/spc.html">spc</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">recall</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject input    recall</span></span>
 <span><span class="co">#&gt; 1       1     1 0.5416667</span></span>
@@ -198,7 +198,7 @@
 </h3>
 <p>We can also split up recalls, to test for example how likely participants were to initiate recall with the last item on the list, using <code>pnr</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">nth_recall</span> <span class="op">&lt;-</span> <span class="fu">pnr</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">nth_recall</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pnr.html">pnr</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">nth_recall</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject output input       prob actual possible</span></span>
 <span><span class="co">#&gt; 1       1      1     1 0.00000000      0       48</span></span>
@@ -215,7 +215,7 @@
 <p>Participants will sometimes accidentally recall items from prior lists; these recalls are known as prior-list intrusions (PLIs). To better understand how prior-list intrusions are happening, you can look at how many lists back those items were originally presented using <code>pli_list_lag</code>.</p>
 <p>First, you need to choose a maximum list lag that you will consider. This determines which lists will be included in the analysis. For example, if you have a maximum lag of 3, then the first 3 lists will be excluded from the analysis. This ensures that each included list can potentially have intrusions of each possible list lag.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pli</span> <span class="op">&lt;-</span> <span class="fu">pli_list_lag</span><span class="op">(</span><span class="va">data</span>, max_lag <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">pli</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pli_list_lag.html">pli_list_lag</a></span><span class="op">(</span><span class="va">data</span>, max_lag <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pli</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject list_lag count   per_list       prob</span></span>
 <span><span class="co">#&gt; 1       1        1     7 0.15555556 0.25925926</span></span>

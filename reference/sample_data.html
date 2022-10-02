@@ -61,15 +61,21 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">sample_data</span><span class="op">(</span><span class="st">"Morton2013"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in py_module_import(module, convert = convert):</span> ModuleNotFoundError: No module named 'psifr'</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 function (..., list = character(), package = NULL, lib.loc = NULL,        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     verbose = getOption("verbose"), envir = .GlobalEnv, overwrite = TRUE) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 {                                                                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     fileExt &lt;- function(x) {                                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         db &lt;- grepl("\\\\.[^.]+\\\\.(gz|bz2|xz)$", x)                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6         ans &lt;- sub(".*\\\\.", "", x)                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   subject list position trial_type       item item_number session list_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    1        1      study      TOWEL         743       1      pure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       1    1        2      study      LADLE         631       1      pure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1    1        3      study    THERMOS         735       1      pure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1    1        4      study       LEGO         637       1      pure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1    1        5      study   BACKPACK         521       1      pure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       1    1        6      study JACKHAMMER         621       1      pure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   category response response_time list_category</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      obj        3         1.517           obj</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      obj        3         1.404           obj</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      obj        3         0.911           obj</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      obj        3         0.883           obj</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      obj        3         0.819           obj</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      obj        1         1.212           obj</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
