@@ -16,7 +16,7 @@ sample_data <- function(study) {
 }
 
 
-#' Create table format data from list format data.
+#' Create table format data from lists
 #'
 #' Convert study and recall lists to table format.
 #'
@@ -82,7 +82,7 @@ check_data <- function(data) {
 }
 
 
-#' Score free recall data
+#' Score standard free recall data
 #'
 #' Merge study and recall events that have the same subject, list, and item.
 #'
@@ -122,7 +122,7 @@ merge_free_recall <- function(data,
 }
 
 
-#' Score study and recall events
+#' Score separate study and recall events
 #'
 #' Merge separated study and recall events that have the same subject, list,
 #' and item.
@@ -281,7 +281,7 @@ split_lists <- function(data, phase, keys = NULL, names = NULL, item_query = NUL
 }
 
 
-#' Pool index
+#' Create pool index
 #'
 #' Look up the indices of multiple items in a dataset from a larger pool.
 #'
@@ -301,7 +301,7 @@ pool_index <- function(trial_items, pool_items_list) {
 }
 
 
-#' Block index
+#' Create block index
 #'
 #' Get the index of each block in a list.
 #'
