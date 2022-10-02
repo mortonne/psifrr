@@ -280,7 +280,7 @@ split_lists <- function(data, phase, keys = NULL, names = NULL, item_query = NUL
   )
 }
 
-#' Get the index of each item in a pool
+#' Pool index
 #'
 #' Look up the indices of multiple items in a dataset from a larger pool.
 #'
