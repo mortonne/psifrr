@@ -41,3 +41,4 @@ vignettes/*.pdf
 
 # automatically generated documentation
 docs
+*.Rd
