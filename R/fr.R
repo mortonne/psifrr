@@ -280,6 +280,7 @@ split_lists <- function(data, phase, keys = NULL, names = NULL, item_query = NUL
   )
 }
 
+
 #' Pool index
 #'
 #' Look up the indices of multiple items in a dataset from a larger pool.
@@ -316,6 +317,7 @@ block_index <- function(list_labels) {
   fr <- reticulate::import("psifr.fr")
   fr$block_index(list_labels)
 }
+
 
 #' Serial position curve
 #'
