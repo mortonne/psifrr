@@ -13,8 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# psifrr
-
+# psifrr <img src="man/figures/logo.png" width="150px" align="right" />
 <!-- badges: start -->
 <!-- badges: end -->
 

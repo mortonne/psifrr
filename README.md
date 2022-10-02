@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# psifrr
+# psifrr <img src="man/figures/logo.png" width="150px" align="right" />
 
 <!-- badges: start -->
 <!-- badges: end -->
