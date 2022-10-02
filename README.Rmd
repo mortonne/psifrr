@@ -69,3 +69,38 @@ filter_data(data, subjects = 1, lists = 1)
 
 See [Managing data](https://psifr.readthedocs.io/en/latest/api/fr.html#managing-data)
 for a full list of functions that operate on free recall data.
+
+## Recall performance
+
+### Serial position curve
+
+We can calculate average recall for each serial position using `spc`.
+
+```{r}
+recall <- spc(data)
+head(recall)
+```
+
+### Probability of Nth recall
+
+We can also split up recalls, to test for example how likely participants were to initiate recall with the last item on the list, using `pnr`.
+
+```{r}
+nth_recall <- pnr(data)
+head(nth_recall)
+```
+
+This gives us the probability of recall conditional on both output position (`output`) and serial or input position (`input`).
+
+### Prior-list intrusions
+
+Participants will sometimes accidentally recall items from prior lists; these recalls are known as prior-list intrusions (PLIs). To better understand how prior-list intrusions are happening, you can look at how many lists back those items were originally presented using `pli_list_lag`.
+
+First, you need to choose a maximum list lag that you will consider. This determines which lists will be included in the analysis. For example, if you have a maximum lag of 3, then the first 3 lists will be excluded from the analysis. This ensures that each included list can potentially have intrusions of each possible list lag.
+
+```{r}
+pli <- pli_list_lag(data, max_lag = 3)
+head(pli)
+```
+
+The analysis returns a raw count of intrusions at each lag (`count`), the count divided by the number of included lists (`per_list`), and the probability of a given intrusion coming from a given lag (`prob`).

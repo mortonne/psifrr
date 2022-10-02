@@ -135,3 +135,72 @@ filter_data(data, subjects = 1, lists = 1)
 See [Managing
 data](https://psifr.readthedocs.io/en/latest/api/fr.html#managing-data)
 for a full list of functions that operate on free recall data.
+
+## Recall performance
+
+### Serial position curve
+
+We can calculate average recall for each serial position using `spc`.
+
+``` r
+recall <- spc(data)
+head(recall)
+#>   subject input    recall
+#> 1       1     1 0.5416667
+#> 2       1     2 0.4583333
+#> 3       1     3 0.6250000
+#> 4       1     4 0.3333333
+#> 5       1     5 0.4375000
+#> 6       1     6 0.4791667
+```
+
+### Probability of Nth recall
+
+We can also split up recalls, to test for example how likely
+participants were to initiate recall with the last item on the list,
+using `pnr`.
+
+``` r
+nth_recall <- pnr(data)
+head(nth_recall)
+#>   subject output input       prob actual possible
+#> 1       1      1     1 0.00000000      0       48
+#> 2       1      1     2 0.02083333      1       48
+#> 3       1      1     3 0.00000000      0       48
+#> 4       1      1     4 0.00000000      0       48
+#> 5       1      1     5 0.00000000      0       48
+#> 6       1      1     6 0.00000000      0       48
+```
+
+This gives us the probability of recall conditional on both output
+position (`output`) and serial or input position (`input`).
+
+### Prior-list intrusions
+
+Participants will sometimes accidentally recall items from prior lists;
+these recalls are known as prior-list intrusions (PLIs). To better
+understand how prior-list intrusions are happening, you can look at how
+many lists back those items were originally presented using
+`pli_list_lag`.
+
+First, you need to choose a maximum list lag that you will consider.
+This determines which lists will be included in the analysis. For
+example, if you have a maximum lag of 3, then the first 3 lists will be
+excluded from the analysis. This ensures that each included list can
+potentially have intrusions of each possible list lag.
+
+``` r
+pli <- pli_list_lag(data, max_lag = 3)
+head(pli)
+#>   subject list_lag count   per_list       prob
+#> 1       1        1     7 0.15555556 0.25925926
+#> 2       1        2     5 0.11111111 0.18518519
+#> 3       1        3     0 0.00000000 0.00000000
+#> 4       2        1     9 0.20000000 0.19148936
+#> 5       2        2     2 0.04444444 0.04255319
+#> 6       2        3     1 0.02222222 0.02127660
+```
+
+The analysis returns a raw count of intrusions at each lag (`count`),
+the count divided by the number of included lists (`per_list`), and the
+probability of a given intrusion coming from a given lag (`prob`).
