@@ -23,3 +23,10 @@ reference:
   - spc
   - pnr
   - pli_list_lag
+- title: Recall order
+  desc: >
+    Analyses of recall order.
+  contents:
+  - lag_crp
+  - lag_crp_compound
+  - lag_rank
