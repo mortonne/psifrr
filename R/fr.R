@@ -397,3 +397,58 @@ pli_list_lag <- function(data, max_lag) {
   fr <- reticulate::import("psifr.fr")
   fr$pli_list_lag(data, max_lag)
 }
+
+
+#' Lag conditional response probability
+#'
+#' Probability of recalling an item as a function of its lag from the previous
+#' recall, conditional on it being available for recall.
+#'
+#' @param data Merged study and recall data.
+#' @param lag_key Name of column to use when calculating lag between recalled
+#'   items.
+#' @param count_unique If TRUE, possible transitions of the same lag will only
+#'   be incremented once per transition.
+#' @param item_query Query string to select items to include in the pool of
+#'   possible recalls to be examined.
+#' @param test_key Name of column with labels to use when testing transitions
+#'   for inclusion.
+#' @param test Function that takes in previous and current item values and
+#'   returns TRUE for transitions that should be included.
+#'
+#' @return Results with `subject`, `lag`, `prob`, `actual`, and `possible` 
+#'   columns. The `prob` column indicates conditional response probability. The 
+#'   `actual` column indicates the count of transitions actually made at a given
+#'   lag. The `possible` column indicates the number of transitions that could 
+#'   have been made, given item availability (previously recalled items are 
+#'   excluded).
+#'
+#' @export
+#' @examples
+#' # All transitions included
+#' raw <- sample_data("Morton2013")
+#' data <- merge_free_recall(raw, study_keys = list("category"))
+#' head(lag_crp(data))
+#'
+#' # Excluding the first three output positions (need to include non-recalled 
+#' # items specifically so they aren't excluded as possible items to recall)
+#' head(lag_crp(data, item_query = "output > 3 or not recall"))
+#'
+#' # Including within-category transitions only
+#' head(lag_crp(data, test_key = "category", test = function(x, y) x == y))
+lag_crp <- function(data,
+                    lag_key = "input",
+                    count_unique = FALSE,
+                    item_query = NULL,
+                    test_key = NULL,
+                    test = NULL) {
+  fr <- reticulate::import("psifr.fr")
+  fr$lag_crp(
+    data,
+    lag_key = lag_key,
+    count_unique = count_unique,
+    item_query = item_query,
+    test_key = test_key,
+    test = test
+  )
+}
