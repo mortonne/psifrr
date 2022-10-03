@@ -452,3 +452,56 @@ lag_crp <- function(data,
     test = test
   )
 }
+
+
+#' Compound lag conditional response probability
+#'
+#' Response probability as a function of the lag of current and prior
+#' transitions, conditional on item availability.
+#'
+#' @param data Merged study and recall data.
+#' @param lag_key Name of column to use when calculating lag between recalled
+#'   items.
+#' @param count_unique If TRUE, possible transitions of the same lag will only
+#'   be incremented once per transition.
+#' @param item_query Query string to select items to include in the pool of
+#'   possible recalls to be examined.
+#' @param test_key Name of column with labels to use when testing transitions
+#'   for inclusion.
+#' @param test Function that takes in previous and current item values and
+#'   returns TRUE for transitions that should be included.
+#'
+#' @return Results with `subject`, `previous`, `current`, `prob`, `actual`, and
+#'   `possible` columns. The `prob` column indicates conditional response
+#'   probability. The `actual` column indicates the count of transitions
+#'   actually made at a given combination of `previous` and `current` lags. The
+#'   `possible` column indicates the number of transitions that could have been
+#'   made, given item availability (previously recalled items are excluded).
+#'
+#' @export
+#' @examples
+#' # Create short example list with three recalls
+#' subjects <- list(1)
+#' study <- list(list("absence", "hollow", "pupil", "fountain"))
+#' recall <- list(list("fountain", "hollow", "absence"))
+#' raw <- table_from_lists(subjects, study, recall)
+#' data <- merge_free_recall(raw)
+#' 
+#' # Display compound CRP for previous lags of -3 and -2
+#' head(lag_crp_compound(data), 14)
+lag_crp_compound <- function(data,
+                             lag_key = "input",
+                             count_unique = FALSE,
+                             item_query = NULL,
+                             test_key = NULL,
+                             test = NULL) {
+  fr <- reticulate::import("psifr.fr")
+  fr$lag_crp_compound(
+    data,
+    lag_key = lag_key,
+    count_unique = count_unique,
+    item_query = item_query,
+    test_key = test_key,
+    test = test
+  )
+}
