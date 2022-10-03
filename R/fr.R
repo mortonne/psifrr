@@ -505,3 +505,46 @@ lag_crp_compound <- function(data,
     test = test
   )
 }
+
+
+#' Lag rank
+#'
+#' Calculate the mean rank of absolute input position lags between adjacent
+#' recalls, relative to possible absolute lags.
+#'
+#' @param data Merged study and recall data.
+#' @param lag_key Name of column to use when calculating lag between recalled
+#'   items.
+#' @param item_query Query string to select items to include in the pool of
+#'   possible recalls to be examined.
+#' @param test_key Name of column with labels to use when testing transitions
+#'   for inclusion.
+#' @param test Function that takes in previous and current item values and
+#'   returns TRUE for transitions that should be included.
+#'
+#' @return Results with `subject` and `rank` columns. The `rank` indicates how
+#'   strongly recalls were clustered by input position lag relative to the
+#'   possible items that could have been recalled on each transition. A `rank`
+#'   of 1 indicates that the lowest lag item was always recalled. A `rank` of
+#'   0.5 indicates chance clustering. A `rank` of 0 indicates that the highest
+#'   lag item was always recalled.
+#'
+#' @export
+#' @examples
+#' raw <- sample_data("Morton2013")
+#' data <- merge_free_recall(raw, study_keys = list("category"))
+#' head(lag_rank(data))
+lag_rank <- function(data,
+                     lag_key = "input",
+                     item_query = NULL,
+                     test_key = NULL,
+                     test = NULL) {
+  fr <- reticulate::import("psifr.fr")
+  fr$lag_rank(
+    data,
+    lag_key = lag_key,
+    item_query = item_query,
+    test_key = test_key,
+    test = test
+  )
+}
