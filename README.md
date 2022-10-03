@@ -138,7 +138,7 @@ filter_data(data, subjects = 1, lists = 1)
 ```
 
 See [Managing
-data](https://psifr.readthedocs.io/en/latest/api/fr.html#managing-data)
+data](https://mortonne.github.io/psifrr/reference/index.html#managing-data)
 for a full list of functions that operate on free recall data.
 
 ## Recall performance
