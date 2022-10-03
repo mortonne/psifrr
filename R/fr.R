@@ -486,7 +486,7 @@ lag_crp <- function(data,
 #' recall <- list(list("fountain", "hollow", "absence"))
 #' raw <- table_from_lists(subjects, study, recall)
 #' data <- merge_free_recall(raw)
-#' 
+#'
 #' # Display compound CRP for previous lags of -3 and -2
 #' head(lag_crp_compound(data), 14)
 lag_crp_compound <- function(data,
