@@ -49,7 +49,7 @@ raw <- sample_data("Morton2013")
 data <- merge_free_recall(raw, study_keys = list("category"))
 head(lag_crp(data))
 
-# Excluding the first three output positions (need to include non-recalled 
+# Excluding the first three output positions (need to include non-recalled
 # items specifically so they aren't excluded as possible items to recall)
 head(lag_crp(data, item_query = "output > 3 or not recall"))
 

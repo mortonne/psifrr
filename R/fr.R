@@ -416,11 +416,11 @@ pli_list_lag <- function(data, max_lag) {
 #' @param test Function that takes in previous and current item values and
 #'   returns TRUE for transitions that should be included.
 #'
-#' @return Results with `subject`, `lag`, `prob`, `actual`, and `possible` 
-#'   columns. The `prob` column indicates conditional response probability. The 
+#' @return Results with `subject`, `lag`, `prob`, `actual`, and `possible`
+#'   columns. The `prob` column indicates conditional response probability. The
 #'   `actual` column indicates the count of transitions actually made at a given
-#'   lag. The `possible` column indicates the number of transitions that could 
-#'   have been made, given item availability (previously recalled items are 
+#'   lag. The `possible` column indicates the number of transitions that could
+#'   have been made, given item availability (previously recalled items are
 #'   excluded).
 #'
 #' @export
@@ -430,7 +430,7 @@ pli_list_lag <- function(data, max_lag) {
 #' data <- merge_free_recall(raw, study_keys = list("category"))
 #' head(lag_crp(data))
 #'
-#' # Excluding the first three output positions (need to include non-recalled 
+#' # Excluding the first three output positions (need to include non-recalled
 #' # items specifically so they aren't excluded as possible items to recall)
 #' head(lag_crp(data, item_query = "output > 3 or not recall"))
 #'
