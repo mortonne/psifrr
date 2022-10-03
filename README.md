@@ -209,3 +209,81 @@ head(pli)
 The analysis returns a raw count of intrusions at each lag (`count`),
 the count divided by the number of included lists (`per_list`), and the
 probability of a given intrusion coming from a given lag (`prob`).
+
+## Temporal clustering
+
+### Lag conditional response probability
+
+In all CRP analyses, transition probabilities are calculated conditional
+on a given transition being available. For example, in a six-item list,
+if the items 6, 1, and 4 have been recalled, then possible items that
+could have been recalled next are 2, 3, or 5; therefore, possible lags
+at that point in the recall sequence are -2, -1, or +1. The number of
+actual transitions observed for each lag is divided by the number of
+times that lag was possible, to obtain the CRP for each lag.
+
+``` r
+crp <- lag_crp(data)
+head(crp)
+#>   subject lag       prob actual possible
+#> 1       1 -23 0.02083333      1       48
+#> 2       1 -22 0.03571429      3       84
+#> 3       1 -21 0.02631579      3      114
+#> 4       1 -20 0.02400000      3      125
+#> 5       1 -19 0.01438849      2      139
+#> 6       1 -18 0.01219512      2      164
+```
+
+The results show the count of times a given transition actually happened
+in the observed recall sequences (`actual`) and the number of times a
+transition could have occurred (`possible`). Finally, the `prob` column
+gives the estimated probability of a given transition occurring,
+calculated by dividing the actual count by the possible count.
+
+### Compound lag conditional response probability
+
+The compound lag-CRP was developed to measure how temporal clustering
+changes as a result of prior clustering during recall. They found
+evidence that temporal clustering is greater immediately after
+transitions with short lags compared to long lags. The
+`lag_crp_compound` analysis calculates conditional response probability
+by lag, but with the additional condition of the lag of the previous
+transition.
+
+``` r
+compound_crp <- lag_crp_compound(data)
+head(compound_crp)
+#>   subject previous current prob actual possible
+#> 1       1      -23     -23  NaN      0        0
+#> 2       1      -23     -22  NaN      0        0
+#> 3       1      -23     -21  NaN      0        0
+#> 4       1      -23     -20  NaN      0        0
+#> 5       1      -23     -19  NaN      0        0
+#> 6       1      -23     -18  NaN      0        0
+```
+
+The results show conditional response probabilities as in the standard
+lag-CRP analysis, but with two lag columns: `previous` (the lag of the
+prior transition) and `current` (the lag of the current transition).
+
+### Lag rank
+
+We can summarize the tendency to group together nearby items by running
+a lag rank analysis using `lag_rank`. For each recall, this determines
+the absolute lag of all remaining items available for recall and then
+calculates their percentile rank. Then the rank of the actual transition
+made is taken, scaled to vary between 0 (furthest item chosen) and 1
+(nearest item chosen). Chance clustering will be 0.5; clustering above
+that value is evidence of a temporal contiguity effect.
+
+``` r
+ranks <- lag_rank(data)
+head(ranks)
+#>   subject      rank
+#> 1       1 0.6109533
+#> 2       2 0.6356764
+#> 3       3 0.6126071
+#> 4       4 0.6670897
+#> 5       5 0.6439234
+#> 6       6 0.6484440
+```
