@@ -175,7 +175,7 @@
 <span><span class="co">#&gt; 23        NaN         NaN</span></span>
 <span><span class="co">#&gt; 24        NaN         NaN</span></span>
 <span><span class="co">#&gt; 25        NaN         NaN</span></span></code></pre></div>
-<p>See <a href="https://psifr.readthedocs.io/en/latest/api/fr.html#managing-data" class="external-link">Managing data</a> for a full list of functions that operate on free recall data.</p>
+<p>See <a href="https://mortonne.github.io/psifrr/reference/index.html#managing-data">Managing data</a> for a full list of functions that operate on free recall data.</p>
 </div>
 <div class="section level2">
 <h2 id="recall-performance">Recall performance<a class="anchor" aria-label="anchor" href="#recall-performance"></a>
@@ -227,6 +227,57 @@
 <span><span class="co">#&gt; 5       2        2     2 0.04444444 0.04255319</span></span>
 <span><span class="co">#&gt; 6       2        3     1 0.02222222 0.02127660</span></span></code></pre></div>
 <p>The analysis returns a raw count of intrusions at each lag (<code>count</code>), the count divided by the number of included lists (<code>per_list</code>), and the probability of a given intrusion coming from a given lag (<code>prob</code>).</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="temporal-clustering">Temporal clustering<a class="anchor" aria-label="anchor" href="#temporal-clustering"></a>
+</h2>
+<div class="section level3">
+<h3 id="lag-conditional-response-probability">Lag conditional response probability<a class="anchor" aria-label="anchor" href="#lag-conditional-response-probability"></a>
+</h3>
+<p>In all CRP analyses, transition probabilities are calculated conditional on a given transition being available. For example, in a six-item list, if the items 6, 1, and 4 have been recalled, then possible items that could have been recalled next are 2, 3, or 5; therefore, possible lags at that point in the recall sequence are -2, -1, or +1. The number of actual transitions observed for each lag is divided by the number of times that lag was possible, to obtain the CRP for each lag.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">crp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lag_crp.html">lag_crp</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">crp</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject lag       prob actual possible</span></span>
+<span><span class="co">#&gt; 1       1 -23 0.02083333      1       48</span></span>
+<span><span class="co">#&gt; 2       1 -22 0.03571429      3       84</span></span>
+<span><span class="co">#&gt; 3       1 -21 0.02631579      3      114</span></span>
+<span><span class="co">#&gt; 4       1 -20 0.02400000      3      125</span></span>
+<span><span class="co">#&gt; 5       1 -19 0.01438849      2      139</span></span>
+<span><span class="co">#&gt; 6       1 -18 0.01219512      2      164</span></span></code></pre></div>
+<p>The results show the count of times a given transition actually happened in the observed recall sequences (<code>actual</code>) and the number of times a transition could have occurred (<code>possible</code>). Finally, the <code>prob</code> column gives the estimated probability of a given transition occurring, calculated by dividing the actual count by the possible count.</p>
+</div>
+<div class="section level3">
+<h3 id="compound-lag-conditional-response-probability">Compound lag conditional response probability<a class="anchor" aria-label="anchor" href="#compound-lag-conditional-response-probability"></a>
+</h3>
+<p>The compound lag-CRP was developed to measure how temporal clustering changes as a result of prior clustering during recall. They found evidence that temporal clustering is greater immediately after transitions with short lags compared to long lags. The <code>lag_crp_compound</code> analysis calculates conditional response probability by lag, but with the additional condition of the lag of the previous transition.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">compound_crp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lag_crp_compound.html">lag_crp_compound</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">compound_crp</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject previous current prob actual possible</span></span>
+<span><span class="co">#&gt; 1       1      -23     -23  NaN      0        0</span></span>
+<span><span class="co">#&gt; 2       1      -23     -22  NaN      0        0</span></span>
+<span><span class="co">#&gt; 3       1      -23     -21  NaN      0        0</span></span>
+<span><span class="co">#&gt; 4       1      -23     -20  NaN      0        0</span></span>
+<span><span class="co">#&gt; 5       1      -23     -19  NaN      0        0</span></span>
+<span><span class="co">#&gt; 6       1      -23     -18  NaN      0        0</span></span></code></pre></div>
+<p>The results show conditional response probabilities as in the standard lag-CRP analysis, but with two lag columns: <code>previous</code> (the lag of the prior transition) and <code>current</code> (the lag of the current transition).</p>
+</div>
+<div class="section level3">
+<h3 id="lag-rank">Lag rank<a class="anchor" aria-label="anchor" href="#lag-rank"></a>
+</h3>
+<p>We can summarize the tendency to group together nearby items by running a lag rank analysis using <code>lag_rank</code>. For each recall, this determines the absolute lag of all remaining items available for recall and then calculates their percentile rank. Then the rank of the actual transition made is taken, scaled to vary between 0 (furthest item chosen) and 1 (nearest item chosen). Chance clustering will be 0.5; clustering above that value is evidence of a temporal contiguity effect.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ranks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lag_rank.html">lag_rank</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ranks</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject      rank</span></span>
+<span><span class="co">#&gt; 1       1 0.6109533</span></span>
+<span><span class="co">#&gt; 2       2 0.6356764</span></span>
+<span><span class="co">#&gt; 3       3 0.6126071</span></span>
+<span><span class="co">#&gt; 4       4 0.6670897</span></span>
+<span><span class="co">#&gt; 5       5 0.6439234</span></span>
+<span><span class="co">#&gt; 6       6 0.6484440</span></span></code></pre></div>
 </div>
 </div>
 </div>
