@@ -37,3 +37,8 @@ reference:
   contents:
   - category_crp
   - category_clustering
+- title: Semantic clustering
+  desc: >
+    Analyses of semantic clustering.
+  contents:
+  - distance_crp

@@ -637,3 +637,70 @@ category_clustering <- function(data, category_key) {
   fr <- reticulate::import("psifr.fr")
   fr$category_clustering(data, category_key)
 }
+
+
+#' Distance conditional response probability
+#'
+#' Response probability as a function of a distance measure, conditional on
+#' item availability.
+#'
+#' @param data Merged study and recall data.
+#' @param index_key Name of column containing the index of each item in the
+#'   distances matrix.
+#' @param distances Items x items matrix of pairwise distances.
+#' @param edges Edges of bins to apply to the distances.
+#' @param centers Centers to label each bin. If not specified, the center point
+#'   between edges will be used.
+#' @param count_unique If TRUE, possible transitions to a given distance bin
+#'   will only count once for a given transition.
+#' @param item_query Query string to select items to include in the pool of
+#'   possible recalls to be examined.
+#' @param test_key Name of column with labels to use when testing transitions
+#'   for inclusion.
+#' @param test Function that takes in previous and current item values and
+#'   returns TRUE for transitions that should be included.
+#'
+#' @return Results with `subject`, `bin`, `prob`, `actual`, and `possible`
+#'   columns. The `prob` column indicates conditional response probability. The
+#'   `actual` column indicates the count of transitions actually made at a given
+#'   distance bin. The `possible` column indicates the number of transitions
+#'   that could have been made, given item availability (previously recalled
+#'   items are excluded).
+#'
+#' @export
+#' @examples
+#' # Load data and item-item distances
+#' raw <- sample_data("Morton2013")
+#' data <- merge_free_recall(raw)
+#' d <- sample_distances("Morton2013")
+#'
+#' # Prepare bin definitions
+#' percentiles <- pracma::linspace(.01, .99, 10)
+#' edges <- quantile(pracma::squareform(d$distances), percentiles)
+#'
+#' # Calculate distance CRP
+#' data$item_index <- pool_index(data$item, d$items)
+#' crp <- distance_crp(data, "item_index", d$distances, edges)
+distance_crp <- function(data,
+                         index_key,
+                         distances,
+                         edges,
+                         centers = NULL,
+                         count_unique = FALSE,
+                         item_query = NULL,
+                         test_key = NULL,
+                         test = NULL) {
+  fr <- reticulate::import("psifr.fr")
+  fr$distance_crp(
+    data,
+    index_key,
+    distances,
+    edges,
+    centers = centers,
+    count_unique = count_unique,
+    item_query = item_query,
+    test_key = test_key,
+    test = test,
+    drop_bin = TRUE
+  )
+}
