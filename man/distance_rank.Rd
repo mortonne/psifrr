@@ -48,4 +48,5 @@ d <- sample_distances("Morton2013")
 # Calculate distance rank
 data$item_index <- pool_index(data$item, d$items)
 ranks <- distance_rank(data, "item_index", d$distances)
+head(ranks)
 }
