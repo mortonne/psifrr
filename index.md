@@ -57,7 +57,7 @@ data](https://psifr.readthedocs.io/en/stable/guide/score.html) for
 details.
 
 ``` r
-data <- merge_free_recall(raw)
+data <- merge_free_recall(raw, study_keys = list("category"))
 ```
 
 We can use `filter_data` to a select one list for a sample of what the
@@ -92,33 +92,33 @@ filter_data(data, subjects = 1, lists = 1)
 #> 23       1    1        REMOTE    23    NaN  TRUE  FALSE      0     FALSE
 #> 24       1    1         CHAIN    24      1  TRUE   TRUE      0     FALSE
 #> 25       1    1         CHAIN    24     14 FALSE   TRUE      1     FALSE
-#>    prior_list prior_input
-#> 0         NaN         NaN
-#> 1         NaN         NaN
-#> 2         NaN         NaN
-#> 3         NaN         NaN
-#> 4         NaN         NaN
-#> 5         NaN         NaN
-#> 6         NaN         NaN
-#> 7         NaN         NaN
-#> 8         NaN         NaN
-#> 9         NaN         NaN
-#> 10        NaN         NaN
-#> 11        NaN         NaN
-#> 12        NaN         NaN
-#> 13        NaN         NaN
-#> 14        NaN         NaN
-#> 15        NaN         NaN
-#> 16        NaN         NaN
-#> 17        NaN         NaN
-#> 18        NaN         NaN
-#> 19        NaN         NaN
-#> 20        NaN         NaN
-#> 21        NaN         NaN
-#> 22        NaN         NaN
-#> 23        NaN         NaN
-#> 24        NaN         NaN
-#> 25        NaN         NaN
+#>    category prior_list prior_input
+#> 0       obj        NaN         NaN
+#> 1       obj        NaN         NaN
+#> 2       obj        NaN         NaN
+#> 3       obj        NaN         NaN
+#> 4       obj        NaN         NaN
+#> 5       obj        NaN         NaN
+#> 6       obj        NaN         NaN
+#> 7       obj        NaN         NaN
+#> 8       obj        NaN         NaN
+#> 9       obj        NaN         NaN
+#> 10      obj        NaN         NaN
+#> 11      obj        NaN         NaN
+#> 12      obj        NaN         NaN
+#> 13      obj        NaN         NaN
+#> 14      obj        NaN         NaN
+#> 15      obj        NaN         NaN
+#> 16      obj        NaN         NaN
+#> 17      obj        NaN         NaN
+#> 18      obj        NaN         NaN
+#> 19      obj        NaN         NaN
+#> 20      obj        NaN         NaN
+#> 21      obj        NaN         NaN
+#> 22      obj        NaN         NaN
+#> 23      obj        NaN         NaN
+#> 24      obj        NaN         NaN
+#> 25      obj        NaN         NaN
 ```
 
 See [Managing
@@ -271,3 +271,50 @@ head(ranks)
 #> 5       5 0.6439234
 #> 6       6 0.6484440
 ```
+
+## Category clustering
+
+### Category conditional response probability
+
+If there are multiple categories or conditions of trials in a list, we
+can test whether participants tend to successively recall items from the
+same category. The category-CRP, calculated using `category_crp`,
+estimates the probability of successively recalling two items from the
+same category.
+
+``` r
+cat_crp <- category_crp(data, "category")
+head(cat_crp)
+#>   subject      prob actual possible
+#> 1       1 0.8011472    419      523
+#> 2       2 0.7334559    399      544
+#> 3       3 0.7631579    377      494
+#> 4       4 0.8148820    449      551
+#> 5       5 0.8772727    579      660
+#> 6       6 0.8096154    421      520
+```
+
+### Category clustering measures
+
+A number of measures have been developed to measure category clustering
+relative to that expected due to chance, under certain assumptions. Two
+such measures are list-based clustering (LBC) and adjusted ratio of
+clustering (ARC). These measures can be calculated using the
+`category_clustering` function.
+
+``` r
+clust = category_clustering(data, "category")
+head(clust)
+#>   subject      lbc       arc
+#> 1       1 2.286232 0.6145451
+#> 2       2 1.846014 0.4078391
+#> 3       3 2.102355 0.6273712
+#> 4       4 2.778080 0.6887610
+#> 5       5 4.706522 0.8737552
+#> 6       6 2.801630 0.7239257
+```
+
+Both measures are defined such that positive values indicate
+above-chance clustering. ARC scores have a maximum of 1, while the upper
+bound of LBC scores depends on the number of categories and the number
+of items per category in the study list.
