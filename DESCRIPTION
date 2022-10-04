@@ -20,3 +20,9 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: https://mortonne.github.io/psifrr/
+Config/reticulate:
+  list(
+    packages = list(
+      list(package = "git+https://github.com/mortonne/psifr.git@reticulate", pip = TRUE)
+    )
+  )
