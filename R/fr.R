@@ -548,3 +548,45 @@ lag_rank <- function(data,
     test = test
   )
 }
+
+
+#' Category conditional response probability
+#'
+#' Response probability of within-category transitions, conditional on
+#' availability.
+#'
+#' @param data Merged study and recall data.
+#' @param category_key Name of column with category labels.
+#' @param item_query Query string to select items to include in the pool of
+#'   possible recalls to be examined.
+#' @param test_key Name of column with labels to use when testing transitions
+#'   for inclusion.
+#' @param test Function that takes in previous and current item values and
+#'   returns TRUE for transitions that should be included.
+#'
+#' @return Results with `subject`, `prob`, `actual`, and `possible` columns.
+#'   The `prob` column indicates conditional response probability. The `actual`
+#'   column indicates the count of transitions actually made at a given lag. The
+#'   `possible` column indicates the number of transitions that could have been
+#'   made, given item availability (previously recalled items are excluded).
+#'
+#' @export
+#' @examples
+#' raw <- sample_data("Morton2013")
+#' data <- merge_free_recall(raw, study_keys = list("category"))
+#' cat_crp <- category_crp(data, "category")
+#' head(cat_crp)
+category_crp <- function(data,
+                         category_key,
+                         item_query = NULL,
+                         test_key = NULL,
+                         test = NULL) {
+  fr <- reticulate::import("psifr.fr")
+  fr$category_crp(
+    data,
+    category_key,
+    item_query = item_query,
+    test_key = test_key,
+    test = test
+  )
+}

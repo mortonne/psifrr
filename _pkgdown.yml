@@ -23,10 +23,15 @@ reference:
   - spc
   - pnr
   - pli_list_lag
-- title: Recall order
+- title: Temporal clustering
   desc: >
-    Analyses of recall order.
+    Analyses of temporal clustering.
   contents:
   - lag_crp
   - lag_crp_compound
   - lag_rank
+- title: Category clustering
+  desc: >
+    Analyses of category clustering.
+  contents:
+  - category_crp
