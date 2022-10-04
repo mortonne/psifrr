@@ -51,12 +51,12 @@ documentation and a list of available analyses.
 
 ## Importing data
 
-Generally the best way to get your data into shape for analysis in Psifr is to create a CSV (or TSV) file with one row for each event in the experiment, including study events (i.e., item presentations) and all recall attempts (including repeats and intrusions).
+Generally the best way to get your data into shape for analysis in psifrr is to create a CSV (or TSV) file with one row for each event in the experiment, including study events (i.e., item presentations) and all recall attempts (including repeats and intrusions).
 See [importing data](https://psifr.readthedocs.io/en/latest/guide/import.html) for details.
 
 ## Citation
 
-If you use Psifr, please cite the paper:
+If you use psifrr, please cite the Psifr paper:
 
 Morton, N. W., (2020). 
 Psifr: Analysis and visualization of free recall data. 
