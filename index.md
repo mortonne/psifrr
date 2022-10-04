@@ -318,3 +318,101 @@ Both measures are defined such that positive values indicate
 above-chance clustering. ARC scores have a maximum of 1, while the upper
 bound of LBC scores depends on the number of categories and the number
 of items per category in the study list.
+
+## Semantic clustering
+
+### Distance conditional response probability
+
+Models of semantic knowledge allow the semantic distance between pairs
+of items to be quantified. If you have such a model defined for your
+stimulus pool, you can use the distance CRP analysis to examine how
+semantic distance affects recall transitions.
+
+You must first define distances between pairs of items. Here, we use
+correlation distances based on the wiki2USE model.
+
+``` r
+d <- sample_distances("Morton2013")
+```
+
+We also need a column indicating the index of each item in the distances
+matrix. We use `pool_index` to create a new column called `item_index`
+with the index of each item in the pool corresponding to the distances
+matrix.
+
+``` r
+data$item_index <- pool_index(data$item, d$items)
+```
+
+Finally, we must define distance bins. Here, we use 10 bins with equally
+spaced distance percentiles. Note that, when calculating distance
+percentiles, we use the `squareform` function to get only the
+non-diagonal entries.
+
+``` r
+percentiles <- pracma::linspace(.01, .99, 10)
+edges <- quantile(pracma::squareform(d$distances), percentiles)
+```
+
+We can now calculate conditional response probability as a function of
+distance bin using `distance_crp`, to examine how response probability
+varies with semantic distance.
+
+``` r
+dist_crp <- distance_crp(data, "item_index", d$distances, edges)
+head(dist_crp)
+#>   subject    center       prob actual possible
+#> 1       1 0.4675320 0.08545557    151     1767
+#> 2       1 0.6177484 0.06791569     87     1281
+#> 3       1 0.6736562 0.06250000     65     1040
+#> 4       1 0.7110752 0.05183585     48      926
+#> 5       1 0.7420689 0.05063291     44      869
+#> 6       1 0.7708671 0.02836879     24      846
+```
+
+### Distance rank
+
+Similarly to the lag rank analysis of temporal clustering, we can
+summarize distance-based clustering (such as semantic clustering) with a
+single rank measure. The distance rank varies from 0 (the most-distant
+item is always recalled) to 1 (the closest item is always recalled),
+with chance clustering corresponding to 0.5. Given a matrix of item
+distances, we can calculate distance rank using `distance_rank`.
+
+``` r
+ranks <- distance_rank(data, "item_index", d$distances)
+head(ranks)
+#>   subject      rank
+#> 1       1 0.6355710
+#> 2       2 0.5714568
+#> 3       3 0.6272815
+#> 4       4 0.6375957
+#> 5       5 0.6461814
+#> 6       6 0.6002912
+```
+
+### Distance rank shifted
+
+Like with the compound lag-CRP, we can also examine how recalls before
+the just-previous one may predict subsequent recalls. To examine whether
+distances relative to earlier items are predictive of the next recall,
+we can use a shifted distance rank analysis using
+`distance_rank_shifted`.
+
+Here, to account for the category structure of the list, we will only
+include within-category transitions.
+
+``` r
+ranks <- distance_rank_shifted(data, "item_index", d$distances, 4, test_key = "category", test = function(x, y) x == y)
+head(ranks)
+#>   subject shift      rank
+#> 1       1    -4 0.5186171
+#> 2       1    -3 0.4921032
+#> 3       1    -2 0.5160634
+#> 4       1    -1 0.5791984
+#> 5       2    -4 0.4639307
+#> 6       2    -3 0.4965965
+```
+
+The distance rank is returned for each shift. The -1 shift is the same
+as the standard distance rank analysis.
