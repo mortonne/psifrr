@@ -17,13 +17,13 @@ sample_data <- function(study) {
 
 
 #' Load sample distances
-#' 
+#'
 #' Load semantic distances between pairs of items.
-#' 
+#'
 #' @param study Study to load distances from (options: "Morton2013").
-#' 
+#'
 #' @return A matrix with item-item distances for the specified `study`.
-#' 
+#'
 #' @export
 #' @examples
 #' d <- sample_distances("Morton2013")
