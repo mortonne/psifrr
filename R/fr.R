@@ -16,6 +16,26 @@ sample_data <- function(study) {
 }
 
 
+#' Load sample distances
+#' 
+#' Load semantic distances between pairs of items.
+#' 
+#' @param study Study to load distances from (options: "Morton2013").
+#' 
+#' @return A matrix with item-item distances for the specified `study`.
+#' 
+#' @export
+#' @examples
+#' d <- sample_distances("Morton2013")
+#' items <- d$items
+#' distances <- d$distances
+sample_distances <- function(study) {
+  fr <- reticulate::import("psifr.fr")
+  outputs <- fr$sample_distances(study)
+  d <- list(items = outputs[[1]], distances = outputs[[2]])
+}
+
+
 #' Create table format data from lists
 #'
 #' Convert study and recall lists to table format.

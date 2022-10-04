@@ -7,6 +7,7 @@ reference:
     Functions for loading sample data, scoring data, and subsetting data.
   contents:
   - sample_data
+  - sample_distances
   - table_from_lists
   - check_data
   - merge_free_recall
