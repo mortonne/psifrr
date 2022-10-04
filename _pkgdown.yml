@@ -43,3 +43,4 @@ reference:
   contents:
   - distance_crp
   - distance_rank
+  - distance_rank_shifted

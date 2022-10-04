@@ -753,3 +753,55 @@ distance_rank <- function(data,
     test = test
   )
 }
+
+
+#' Distance rank shifted
+#'
+#' Rank of transition distances, shifted by recall lag.
+#'
+#' @param data Merged study and recall data.
+#' @param index_key Name of column containing the index of each item in the
+#'   distances matrix.
+#' @param distances Items x items matrix of pairwise distances.
+#' @param max_shift Maximum number of items back for which to rank distances.
+#' @param item_query Query string to select items to include in the pool of
+#'   possible recalls to be examined.
+#' @param test_key Name of column with labels to use when testing transitions
+#'   for inclusion.
+#' @param test Function that takes in previous and current item values and
+#'   returns TRUE for transitions that should be included.
+#'
+#' @return Results with `subject`, `shift`, and `rank` columns. A `rank` of 1
+#'   indicates that the smallest distance transition was always made, while 0.5
+#'   indicates chance clustering, and 0 indicates that the largest distance
+#'   transition was always made.
+#'
+#' @export
+#' @examples
+#' # Load data and item-item distances
+#' raw <- sample_data("Morton2013")
+#' data <- merge_free_recall(raw)
+#' d <- sample_distances("Morton2013")
+#'
+#' # Calculate distance rank
+#' data$item_index <- pool_index(data$item, d$items)
+#' ranks <- distance_rank_shifted(data, "item_index", d$distances, max_shift = 3)
+#' head(ranks)
+distance_rank_shifted <- function(data,
+                                  index_key,
+                                  distances,
+                                  max_shift,
+                                  item_query = NULL,
+                                  test_key = NULL,
+                                  test = NULL) {
+  fr <- reticulate::import("psifr.fr")
+  fr$distance_rank_shifted(
+    data,
+    index_key,
+    distances,
+    max_shift,
+    item_query = item_query,
+    test_key = test_key,
+    test = test
+  )
+}
