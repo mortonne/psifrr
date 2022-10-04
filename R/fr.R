@@ -590,3 +590,30 @@ category_crp <- function(data,
     test = test
   )
 }
+
+
+#' Category clustering
+#'
+#' Measures of category clustering of recall sequences.
+#'
+#' @param data Merged study and recall data.
+#' @param category_key Name of column with category labels.
+#'
+#' @return Results with `subject`, lbc`, and `arc` columns. The `lbc`` column
+#'   indicates the list-based clustering measure. The `arc` column contains the
+#'   adjusted ratio of clustering measure.
+#'
+#' @export
+#' @examples
+#' # Get lists with a mixture of categories
+#' raw <- sample_data("Morton2013")
+#' mixed <- raw[raw$list_type == "mixed", ]
+#'
+#' # Calculate category clustering measures
+#' data <- merge_free_recall(mixed, list_keys = list("category"))
+#' stats <- category_clustering(data, "category")
+#' head(stats)
+category_clustering <- function(data, category_key) {
+  fr <- reticulate::import("psifr.fr")
+  fr$category_clustering(data, category_key)
+}

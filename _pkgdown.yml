@@ -35,3 +35,4 @@ reference:
     Analyses of category clustering.
   contents:
   - category_crp
+  - category_clustering
