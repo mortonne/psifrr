@@ -110,7 +110,7 @@
 <span><span class="co">#&gt; 6      obj        1         1.212           obj</span></span></code></pre></div>
 <p>To analyze a dataset, we need to first score it by matching up study items to recalled items. See <a href="https://psifr.readthedocs.io/en/stable/guide/score.html" class="external-link">Scoring data</a> for details.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/merge_free_recall.html">merge_free_recall</a></span><span class="op">(</span><span class="va">raw</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/merge_free_recall.html">merge_free_recall</a></span><span class="op">(</span><span class="va">raw</span>, study_keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"category"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We can use <code>filter_data</code> to a select one list for a sample of what the results look like:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/filter_data.html">filter_data</a></span><span class="op">(</span><span class="va">data</span>, subjects <span class="op">=</span> <span class="fl">1</span>, lists <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
@@ -141,33 +141,33 @@
 <span><span class="co">#&gt; 23       1    1        REMOTE    23    NaN  TRUE  FALSE      0     FALSE</span></span>
 <span><span class="co">#&gt; 24       1    1         CHAIN    24      1  TRUE   TRUE      0     FALSE</span></span>
 <span><span class="co">#&gt; 25       1    1         CHAIN    24     14 FALSE   TRUE      1     FALSE</span></span>
-<span><span class="co">#&gt;    prior_list prior_input</span></span>
-<span><span class="co">#&gt; 0         NaN         NaN</span></span>
-<span><span class="co">#&gt; 1         NaN         NaN</span></span>
-<span><span class="co">#&gt; 2         NaN         NaN</span></span>
-<span><span class="co">#&gt; 3         NaN         NaN</span></span>
-<span><span class="co">#&gt; 4         NaN         NaN</span></span>
-<span><span class="co">#&gt; 5         NaN         NaN</span></span>
-<span><span class="co">#&gt; 6         NaN         NaN</span></span>
-<span><span class="co">#&gt; 7         NaN         NaN</span></span>
-<span><span class="co">#&gt; 8         NaN         NaN</span></span>
-<span><span class="co">#&gt; 9         NaN         NaN</span></span>
-<span><span class="co">#&gt; 10        NaN         NaN</span></span>
-<span><span class="co">#&gt; 11        NaN         NaN</span></span>
-<span><span class="co">#&gt; 12        NaN         NaN</span></span>
-<span><span class="co">#&gt; 13        NaN         NaN</span></span>
-<span><span class="co">#&gt; 14        NaN         NaN</span></span>
-<span><span class="co">#&gt; 15        NaN         NaN</span></span>
-<span><span class="co">#&gt; 16        NaN         NaN</span></span>
-<span><span class="co">#&gt; 17        NaN         NaN</span></span>
-<span><span class="co">#&gt; 18        NaN         NaN</span></span>
-<span><span class="co">#&gt; 19        NaN         NaN</span></span>
-<span><span class="co">#&gt; 20        NaN         NaN</span></span>
-<span><span class="co">#&gt; 21        NaN         NaN</span></span>
-<span><span class="co">#&gt; 22        NaN         NaN</span></span>
-<span><span class="co">#&gt; 23        NaN         NaN</span></span>
-<span><span class="co">#&gt; 24        NaN         NaN</span></span>
-<span><span class="co">#&gt; 25        NaN         NaN</span></span></code></pre></div>
+<span><span class="co">#&gt;    category prior_list prior_input</span></span>
+<span><span class="co">#&gt; 0       obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 1       obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 2       obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 3       obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 4       obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 5       obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 6       obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 7       obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 8       obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 9       obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 10      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 11      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 12      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 13      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 14      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 15      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 16      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 17      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 18      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 19      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 20      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 21      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 22      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 23      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 24      obj        NaN         NaN</span></span>
+<span><span class="co">#&gt; 25      obj        NaN         NaN</span></span></code></pre></div>
 <p>See <a href="https://mortonne.github.io/psifrr/reference/index.html#managing-data">Managing data</a> for a full list of functions that operate on free recall data.</p>
 </div>
 <div class="section level2">
@@ -271,6 +271,41 @@
 <span><span class="co">#&gt; 4       4 0.6670897</span></span>
 <span><span class="co">#&gt; 5       5 0.6439234</span></span>
 <span><span class="co">#&gt; 6       6 0.6484440</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="category-clustering">Category clustering<a class="anchor" aria-label="anchor" href="#category-clustering"></a>
+</h2>
+<div class="section level3">
+<h3 id="category-conditional-response-probability">Category conditional response probability<a class="anchor" aria-label="anchor" href="#category-conditional-response-probability"></a>
+</h3>
+<p>If there are multiple categories or conditions of trials in a list, we can test whether participants tend to successively recall items from the same category. The category-CRP, calculated using <code>category_crp</code>, estimates the probability of successively recalling two items from the same category.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cat_crp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/category_crp.html">category_crp</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"category"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cat_crp</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject      prob actual possible</span></span>
+<span><span class="co">#&gt; 1       1 0.8011472    419      523</span></span>
+<span><span class="co">#&gt; 2       2 0.7334559    399      544</span></span>
+<span><span class="co">#&gt; 3       3 0.7631579    377      494</span></span>
+<span><span class="co">#&gt; 4       4 0.8148820    449      551</span></span>
+<span><span class="co">#&gt; 5       5 0.8772727    579      660</span></span>
+<span><span class="co">#&gt; 6       6 0.8096154    421      520</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="category-clustering-measures">Category clustering measures<a class="anchor" aria-label="anchor" href="#category-clustering-measures"></a>
+</h3>
+<p>A number of measures have been developed to measure category clustering relative to that expected due to chance, under certain assumptions. Two such measures are list-based clustering (LBC) and adjusted ratio of clustering (ARC). These measures can be calculated using the <code>category_clustering</code> function.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">clust</span> <span class="op">=</span> <span class="fu"><a href="reference/category_clustering.html">category_clustering</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"category"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">clust</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject      lbc       arc</span></span>
+<span><span class="co">#&gt; 1       1 2.286232 0.6145451</span></span>
+<span><span class="co">#&gt; 2       2 1.846014 0.4078391</span></span>
+<span><span class="co">#&gt; 3       3 2.102355 0.6273712</span></span>
+<span><span class="co">#&gt; 4       4 2.778080 0.6887610</span></span>
+<span><span class="co">#&gt; 5       5 4.706522 0.8737552</span></span>
+<span><span class="co">#&gt; 6       6 2.801630 0.7239257</span></span></code></pre></div>
+<p>Both measures are defined such that positive values indicate above-chance clustering. ARC scores have a maximum of 1, while the upper bound of LBC scores depends on the number of categories and the number of items per category in the study list.</p>
 </div>
 </div>
 </div>
