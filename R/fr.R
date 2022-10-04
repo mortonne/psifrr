@@ -309,7 +309,7 @@ split_lists <- function(data, phase, keys = NULL, names = NULL, item_query = NUL
 #' @param pool_items_list List of items in the full pool.
 #'
 #' @return Index of each item in the pool. Trials with items not in the pool
-#'   will be NA.
+#'   will be NA. Will be zero-indexed to work with Python functions.
 #'
 #' @export
 #' @examples
@@ -317,7 +317,7 @@ split_lists <- function(data, phase, keys = NULL, names = NULL, item_query = NUL
 #' pool_items_list <- list("a", "b", "c", "d", "e", "f")
 #' pool_index(trial_items, pool_items_list)
 pool_index <- function(trial_items, pool_items_list) {
-  match(trial_items, pool_items_list)
+  match(trial_items, pool_items_list) - 1
 }
 
 

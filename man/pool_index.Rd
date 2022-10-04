@@ -13,7 +13,7 @@ pool_index(trial_items, pool_items_list)
 }
 \value{
 Index of each item in the pool. Trials with items not in the pool
-will be NA.
+will be NA. Will be zero-indexed to work with Python functions.
 }
 \description{
 Look up the indices of multiple items in a dataset from a larger pool.
