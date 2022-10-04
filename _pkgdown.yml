@@ -42,3 +42,4 @@ reference:
     Analyses of semantic clustering.
   contents:
   - distance_crp
+  - distance_rank
