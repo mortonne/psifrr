@@ -25,6 +25,15 @@
     <loc>https://mortonne.github.io/psifrr/reference/check_data.html</loc>
   </url>
   <url>
+    <loc>https://mortonne.github.io/psifrr/reference/distance_crp.html</loc>
+  </url>
+  <url>
+    <loc>https://mortonne.github.io/psifrr/reference/distance_rank.html</loc>
+  </url>
+  <url>
+    <loc>https://mortonne.github.io/psifrr/reference/distance_rank_shifted.html</loc>
+  </url>
+  <url>
     <loc>https://mortonne.github.io/psifrr/reference/filter_data.html</loc>
   </url>
   <url>
@@ -59,6 +68,9 @@
   </url>
   <url>
     <loc>https://mortonne.github.io/psifrr/reference/sample_data.html</loc>
+  </url>
+  <url>
+    <loc>https://mortonne.github.io/psifrr/reference/sample_distances.html</loc>
   </url>
   <url>
     <loc>https://mortonne.github.io/psifrr/reference/spc.html</loc>

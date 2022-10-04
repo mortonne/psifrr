@@ -308,6 +308,68 @@
 <p>Both measures are defined such that positive values indicate above-chance clustering. ARC scores have a maximum of 1, while the upper bound of LBC scores depends on the number of categories and the number of items per category in the study list.</p>
 </div>
 </div>
+<div class="section level2">
+<h2 id="semantic-clustering">Semantic clustering<a class="anchor" aria-label="anchor" href="#semantic-clustering"></a>
+</h2>
+<div class="section level3">
+<h3 id="distance-conditional-response-probability">Distance conditional response probability<a class="anchor" aria-label="anchor" href="#distance-conditional-response-probability"></a>
+</h3>
+<p>Models of semantic knowledge allow the semantic distance between pairs of items to be quantified. If you have such a model defined for your stimulus pool, you can use the distance CRP analysis to examine how semantic distance affects recall transitions.</p>
+<p>You must first define distances between pairs of items. Here, we use correlation distances based on the wiki2USE model.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sample_distances.html">sample_distances</a></span><span class="op">(</span><span class="st">"Morton2013"</span><span class="op">)</span></span></code></pre></div>
+<p>We also need a column indicating the index of each item in the distances matrix. We use <code>pool_index</code> to create a new column called <code>item_index</code> with the index of each item in the pool corresponding to the distances matrix.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span><span class="op">$</span><span class="va">item_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pool_index.html">pool_index</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">item</span>, <span class="va">d</span><span class="op">$</span><span class="va">items</span><span class="op">)</span></span></code></pre></div>
+<p>Finally, we must define distance bins. Here, we use 10 bins with equally spaced distance percentiles. Note that, when calculating distance percentiles, we use the <code>squareform</code> function to get only the non-diagonal entries.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">percentiles</span> <span class="op">&lt;-</span> <span class="fu">pracma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pracma/man/linspace.html" class="external-link">linspace</a></span><span class="op">(</span><span class="fl">.01</span>, <span class="fl">.99</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="fu">pracma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pracma/man/squareform.html" class="external-link">squareform</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">distances</span><span class="op">)</span>, <span class="va">percentiles</span><span class="op">)</span></span></code></pre></div>
+<p>We can now calculate conditional response probability as a function of distance bin using <code>distance_crp</code>, to examine how response probability varies with semantic distance.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dist_crp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distance_crp.html">distance_crp</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"item_index"</span>, <span class="va">d</span><span class="op">$</span><span class="va">distances</span>, <span class="va">edges</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dist_crp</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject    center       prob actual possible</span></span>
+<span><span class="co">#&gt; 1       1 0.4675320 0.08545557    151     1767</span></span>
+<span><span class="co">#&gt; 2       1 0.6177484 0.06791569     87     1281</span></span>
+<span><span class="co">#&gt; 3       1 0.6736562 0.06250000     65     1040</span></span>
+<span><span class="co">#&gt; 4       1 0.7110752 0.05183585     48      926</span></span>
+<span><span class="co">#&gt; 5       1 0.7420689 0.05063291     44      869</span></span>
+<span><span class="co">#&gt; 6       1 0.7708671 0.02836879     24      846</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="distance-rank">Distance rank<a class="anchor" aria-label="anchor" href="#distance-rank"></a>
+</h3>
+<p>Similarly to the lag rank analysis of temporal clustering, we can summarize distance-based clustering (such as semantic clustering) with a single rank measure. The distance rank varies from 0 (the most-distant item is always recalled) to 1 (the closest item is always recalled), with chance clustering corresponding to 0.5. Given a matrix of item distances, we can calculate distance rank using <code>distance_rank</code>.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ranks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distance_rank.html">distance_rank</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"item_index"</span>, <span class="va">d</span><span class="op">$</span><span class="va">distances</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ranks</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject      rank</span></span>
+<span><span class="co">#&gt; 1       1 0.6355710</span></span>
+<span><span class="co">#&gt; 2       2 0.5714568</span></span>
+<span><span class="co">#&gt; 3       3 0.6272815</span></span>
+<span><span class="co">#&gt; 4       4 0.6375957</span></span>
+<span><span class="co">#&gt; 5       5 0.6461814</span></span>
+<span><span class="co">#&gt; 6       6 0.6002912</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="distance-rank-shifted">Distance rank shifted<a class="anchor" aria-label="anchor" href="#distance-rank-shifted"></a>
+</h3>
+<p>Like with the compound lag-CRP, we can also examine how recalls before the just-previous one may predict subsequent recalls. To examine whether distances relative to earlier items are predictive of the next recall, we can use a shifted distance rank analysis using <code>distance_rank_shifted</code>.</p>
+<p>Here, to account for the category structure of the list, we will only include within-category transitions.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ranks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distance_rank_shifted.html">distance_rank_shifted</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"item_index"</span>, <span class="va">d</span><span class="op">$</span><span class="va">distances</span>, <span class="fl">4</span>, test_key <span class="op">=</span> <span class="st">"category"</span>, test <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="va">x</span> <span class="op">==</span> <span class="va">y</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ranks</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subject shift      rank</span></span>
+<span><span class="co">#&gt; 1       1    -4 0.5186171</span></span>
+<span><span class="co">#&gt; 2       1    -3 0.4921032</span></span>
+<span><span class="co">#&gt; 3       1    -2 0.5160634</span></span>
+<span><span class="co">#&gt; 4       1    -1 0.5791984</span></span>
+<span><span class="co">#&gt; 5       2    -4 0.4639307</span></span>
+<span><span class="co">#&gt; 6       2    -3 0.4965965</span></span></code></pre></div>
+<p>The distance rank is returned for each shift. The -1 shift is the same as the standard distance rank analysis.</p>
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
