@@ -14,32 +14,16 @@ package, which is called from R using the `reticulate` package.
 
 ## Installation
 
-First, install `devtools` and `reticulate`:
+First, install `remotes`:
 
 ``` r
-install.packages("reticulate")
-install.packages("devtools")
+install.packages("remotes")
 ```
 
-Follow the `reticulate` package
-[documentation](https://rstudio.github.io/reticulate/index.html) to set
-up a Python environment. One option is to install Python using
-Miniconda:
+Next, install psifrr with:
 
 ``` r
-reticulate::install_miniconda()
-```
-
-Next, install the Psifr Python package:
-
-``` r
-reticulate::py_install("git+https://github.com/mortonne/psifr.git@reticulate", pip=TRUE)
-```
-
-Finally, install psifrr from [GitHub](https://github.com/) with:
-
-``` r
-devtools::install_github("mortonne/psifrr")
+remotes::install_github("mortonne/psifrr")
 ```
 
 ## Quickstart
