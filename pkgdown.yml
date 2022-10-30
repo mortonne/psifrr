@@ -1,8 +1,8 @@
-pandoc: 2.14.2
+pandoc: 2.19.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-10-04T05:39Z
+last_built: 2022-10-30T07:56Z
 urls:
   reference: https://mortonne.github.io/psifrr/reference
   article: https://mortonne.github.io/psifrr/articles
