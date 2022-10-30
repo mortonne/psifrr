@@ -143,6 +143,40 @@ head(recall)
 #> 6       1     6 0.4791667
 ```
 
+Next, we can calculate statistics for each serial position using
+`group_stats`. We’ll take the `recall` statistic, group by `input`
+position, and calculate the mean and 95% bootstrap confidence interval
+for each position.
+
+``` r
+stats <- group_stats(recall, recall, input, ci = 95)
+head(stats)
+#> # A tibble: 6 × 4
+#>   input  mean lower upper
+#>   <dbl> <dbl> <dbl> <dbl>
+#> 1     1 0.565 0.516 0.611
+#> 2     2 0.505 0.458 0.556
+#> 3     3 0.479 0.436 0.517
+#> 4     4 0.443 0.409 0.476
+#> 5     5 0.458 0.417 0.496
+#> 6     6 0.449 0.416 0.482
+```
+
+We can then plot the serial position curve with a confidence band using
+`ggplot2`.
+
+``` r
+library(ggplot2)
+ggplot(stats, aes(x = input)) +
+  geom_line(color = "blue", aes(y = mean)) +
+  geom_ribbon(alpha = 0.1, fill = "blue", aes(ymin = lower, ymax = upper)) +
+  ylim(0, 1) +
+  labs(x = "Serial position", y = "Recall probability") +
+  theme(aspect.ratio = 1)
+```
+
+<img src="man/figures/index-spc-1.png" width="50%" />
+
 ### Probability of Nth recall
 
 We can also split up recalls, to test for example how likely

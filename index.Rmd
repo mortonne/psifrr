@@ -8,8 +8,9 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  fig.path = "man/figures/index-",
+  out.width = "50%",
+  dpi = 300
 )
 ```
 
@@ -70,6 +71,27 @@ We can calculate average recall for each serial position using `spc`.
 ```{r}
 recall <- spc(data)
 head(recall)
+```
+
+Next, we can calculate statistics for each serial position using `group_stats`.
+We'll take the `recall` statistic, group by `input` position, and calculate the
+mean and 95% bootstrap confidence interval for each position.
+
+```{r}
+stats <- group_stats(recall, recall, input, ci = 95)
+head(stats)
+```
+
+We can then plot the serial position curve with a confidence band using `ggplot2`.
+
+```{r, spc}
+library(ggplot2)
+ggplot(stats, aes(x = input)) +
+  geom_line(color = "blue", aes(y = mean)) +
+  geom_ribbon(alpha = 0.1, fill = "blue", aes(ymin = lower, ymax = upper)) +
+  ylim(0, 1) +
+  labs(x = "Serial position", y = "Recall probability") +
+  theme(aspect.ratio = 1)
 ```
 
 ### Probability of Nth recall

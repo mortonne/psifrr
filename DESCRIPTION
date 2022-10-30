@@ -23,7 +23,8 @@ Imports:
     tidyr
 Suggests: 
     testthat (>= 3.0.0),
-    pracma
+    pracma,
+    ggplot2
 Config/testthat/edition: 3
 URL: https://mortonne.github.io/psifrr/
 Config/reticulate:
