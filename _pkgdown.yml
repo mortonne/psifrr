@@ -44,3 +44,8 @@ reference:
   - distance_crp
   - distance_rank
   - distance_rank_shifted
+- title: Statistics
+  desc: >
+    General statistics.
+  contents:
+  - group_stats
