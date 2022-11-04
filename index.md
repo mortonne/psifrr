@@ -181,6 +181,32 @@ ggplot(stats, aes(x = input)) +
 
 <img src="man/figures/index-spc-1.png" width="50%" />
 
+To calculate a serial position curve for multiple conditions, we can use
+`group_by`. Here, we will group by stimulus category.
+
+``` r
+data$category <- as.character(data$category)
+stats <- data %>% 
+  group_by(category) %>% 
+  summarise(spc(across()), .groups = "drop") %>%
+  group_by(category, input) %>% 
+  summarise(boot_ci(recall), .groups = "drop")
+```
+
+We can then split up by category when plotting.
+
+``` r
+ggplot(stats, aes(x = input)) +
+  geom_line(color = "blue", aes(y = mean)) +
+  geom_ribbon(alpha = 0.1, fill = "blue", aes(ymin = lower, ymax = upper)) +
+  ylim(0, 1) +
+  labs(x = "Serial position", y = "Recall probability") +
+  facet_grid(cols = vars(category)) +
+  theme(aspect.ratio = 1)
+```
+
+<img src="man/figures/index-spc_cat-1.png" width="50%" />
+
 ### Probability of Nth recall
 
 We can also split up recalls, to test for example how likely
