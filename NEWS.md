@@ -1,3 +1,8 @@
+# psifrr 0.3.0
+
+* Support for calculating bootstrap confidence intervals has been added.
+* The documentation now contains examples of plotting curves with confidence bands and splitting analyses by condition.
+
 # psifrr 0.2.0
 
 * All non-plotting functions from Psifr now have R interfaces, documentation, and examples.
