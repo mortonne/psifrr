@@ -192,19 +192,23 @@
 <span><span class="co">#&gt; 4       1     4 0.3333333</span></span>
 <span><span class="co">#&gt; 5       1     5 0.4375000</span></span>
 <span><span class="co">#&gt; 6       1     6 0.4791667</span></span></code></pre></div>
-<p>Next, we can calculate statistics for each serial position using <code>group_stats</code>. We’ll take the <code>recall</code> statistic, group by <code>input</code> position, and calculate the mean and 95% bootstrap confidence interval for each position.</p>
+<p>Next, we can calculate statistics for each serial position using <code>boot_ci</code>. We’ll take the <code>recall</code> statistic, group by <code>input</code> position, and calculate the mean and 95% bootstrap confidence interval for each position.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/group_stats.html">group_stats</a></span><span class="op">(</span><span class="va">recall</span>, <span class="va">recall</span>, <span class="va">input</span>, ci <span class="op">=</span> <span class="fl">95</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
+<span><span class="va">stats</span> <span class="op">&lt;-</span> <span class="va">recall</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">input</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="reference/boot_ci.html">boot_ci</a></span><span class="op">(</span><span class="va">recall</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">stats</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
 <span><span class="co">#&gt;   input  mean lower upper</span></span>
 <span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1     1 0.565 0.519 0.610</span></span>
-<span><span class="co">#&gt; 2     2 0.505 0.461 0.551</span></span>
-<span><span class="co">#&gt; 3     3 0.479 0.443 0.523</span></span>
-<span><span class="co">#&gt; 4     4 0.443 0.407 0.476</span></span>
-<span><span class="co">#&gt; 5     5 0.458 0.420 0.498</span></span>
-<span><span class="co">#&gt; 6     6 0.449 0.417 0.482</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     1 0.565 0.518 0.611</span></span>
+<span><span class="co">#&gt; 2     2 0.505 0.457 0.551</span></span>
+<span><span class="co">#&gt; 3     3 0.479 0.436 0.519</span></span>
+<span><span class="co">#&gt; 4     4 0.443 0.410 0.478</span></span>
+<span><span class="co">#&gt; 5     5 0.458 0.422 0.498</span></span>
+<span><span class="co">#&gt; 6     6 0.449 0.415 0.480</span></span></code></pre></div>
 <p>We can then plot the serial position curve with a confidence band using <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -215,12 +219,30 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Serial position"</span>, y <span class="op">=</span> <span class="st">"Recall probability"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/index-spc-1.png" width="50%"></p>
+<p>To calculate a serial position curve for multiple conditions, we can use <code>group_by</code>. Here, we will group by stimulus category.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span><span class="op">$</span><span class="va">category</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">category</span><span class="op">)</span></span>
+<span><span class="va">stats</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">category</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="reference/spc.html">spc</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">category</span>, <span class="va">input</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="reference/boot_ci.html">boot_ci</a></span><span class="op">(</span><span class="va">recall</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span></code></pre></div>
+<p>We can then split up by category when plotting.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">stats</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">input</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_ribbon</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.1</span>, fill <span class="op">=</span> <span class="st">"blue"</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower</span>, ymax <span class="op">=</span> <span class="va">upper</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Serial position"</span>, y <span class="op">=</span> <span class="st">"Recall probability"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">category</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/index-spc_cat-1.png" width="50%"></p>
 </div>
 <div class="section level3">
 <h3 id="probability-of-nth-recall">Probability of Nth recall<a class="anchor" aria-label="anchor" href="#probability-of-nth-recall"></a>
 </h3>
 <p>We can also split up recalls, to test for example how likely participants were to initiate recall with the last item on the list, using <code>pnr</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nth_recall</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pnr.html">pnr</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">nth_recall</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject output input       prob actual possible</span></span>
@@ -237,7 +259,7 @@
 </h3>
 <p>Participants will sometimes accidentally recall items from prior lists; these recalls are known as prior-list intrusions (PLIs). To better understand how prior-list intrusions are happening, you can look at how many lists back those items were originally presented using <code>pli_list_lag</code>.</p>
 <p>First, you need to choose a maximum list lag that you will consider. This determines which lists will be included in the analysis. For example, if you have a maximum lag of 3, then the first 3 lists will be excluded from the analysis. This ensures that each included list can potentially have intrusions of each possible list lag.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pli</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pli_list_lag.html">pli_list_lag</a></span><span class="op">(</span><span class="va">data</span>, max_lag <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pli</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject list_lag count   per_list       prob</span></span>
@@ -257,7 +279,7 @@
 <h3 id="lag-conditional-response-probability">Lag conditional response probability<a class="anchor" aria-label="anchor" href="#lag-conditional-response-probability"></a>
 </h3>
 <p>In all CRP analyses, transition probabilities are calculated conditional on a given transition being available. For example, in a six-item list, if the items 6, 1, and 4 have been recalled, then possible items that could have been recalled next are 2, 3, or 5; therefore, possible lags at that point in the recall sequence are -2, -1, or +1. The number of actual transitions observed for each lag is divided by the number of times that lag was possible, to obtain the CRP for each lag.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">crp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lag_crp.html">lag_crp</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">crp</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject lag       prob actual possible</span></span>
@@ -273,7 +295,7 @@
 <h3 id="compound-lag-conditional-response-probability">Compound lag conditional response probability<a class="anchor" aria-label="anchor" href="#compound-lag-conditional-response-probability"></a>
 </h3>
 <p>The compound lag-CRP was developed to measure how temporal clustering changes as a result of prior clustering during recall. They found evidence that temporal clustering is greater immediately after transitions with short lags compared to long lags. The <code>lag_crp_compound</code> analysis calculates conditional response probability by lag, but with the additional condition of the lag of the previous transition.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">compound_crp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lag_crp_compound.html">lag_crp_compound</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">compound_crp</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject previous current prob actual possible</span></span>
@@ -289,7 +311,7 @@
 <h3 id="lag-rank">Lag rank<a class="anchor" aria-label="anchor" href="#lag-rank"></a>
 </h3>
 <p>We can summarize the tendency to group together nearby items by running a lag rank analysis using <code>lag_rank</code>. For each recall, this determines the absolute lag of all remaining items available for recall and then calculates their percentile rank. Then the rank of the actual transition made is taken, scaled to vary between 0 (furthest item chosen) and 1 (nearest item chosen). Chance clustering will be 0.5; clustering above that value is evidence of a temporal contiguity effect.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ranks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lag_rank.html">lag_rank</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ranks</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject      rank</span></span>
@@ -308,7 +330,7 @@
 <h3 id="category-conditional-response-probability">Category conditional response probability<a class="anchor" aria-label="anchor" href="#category-conditional-response-probability"></a>
 </h3>
 <p>If there are multiple categories or conditions of trials in a list, we can test whether participants tend to successively recall items from the same category. The category-CRP, calculated using <code>category_crp</code>, estimates the probability of successively recalling two items from the same category.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cat_crp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/category_crp.html">category_crp</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"category"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cat_crp</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject      prob actual possible</span></span>
@@ -323,7 +345,7 @@
 <h3 id="category-clustering-measures">Category clustering measures<a class="anchor" aria-label="anchor" href="#category-clustering-measures"></a>
 </h3>
 <p>A number of measures have been developed to measure category clustering relative to that expected due to chance, under certain assumptions. Two such measures are list-based clustering (LBC) and adjusted ratio of clustering (ARC). These measures can be calculated using the <code>category_clustering</code> function.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">clust</span> <span class="op">=</span> <span class="fu"><a href="reference/category_clustering.html">category_clustering</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"category"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">clust</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject      lbc       arc</span></span>
@@ -344,17 +366,17 @@
 </h3>
 <p>Models of semantic knowledge allow the semantic distance between pairs of items to be quantified. If you have such a model defined for your stimulus pool, you can use the distance CRP analysis to examine how semantic distance affects recall transitions.</p>
 <p>You must first define distances between pairs of items. Here, we use correlation distances based on the wiki2USE model.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sample_distances.html">sample_distances</a></span><span class="op">(</span><span class="st">"Morton2013"</span><span class="op">)</span></span></code></pre></div>
 <p>We also need a column indicating the index of each item in the distances matrix. We use <code>pool_index</code> to create a new column called <code>item_index</code> with the index of each item in the pool corresponding to the distances matrix.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span><span class="op">$</span><span class="va">item_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pool_index.html">pool_index</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">item</span>, <span class="va">d</span><span class="op">$</span><span class="va">items</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, we must define distance bins. Here, we use 10 bins with equally spaced distance percentiles. Note that, when calculating distance percentiles, we use the <code>squareform</code> function to get only the non-diagonal entries.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">percentiles</span> <span class="op">&lt;-</span> <span class="fu">pracma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pracma/man/linspace.html" class="external-link">linspace</a></span><span class="op">(</span><span class="fl">.01</span>, <span class="fl">.99</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="fu">pracma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pracma/man/squareform.html" class="external-link">squareform</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">distances</span><span class="op">)</span>, <span class="va">percentiles</span><span class="op">)</span></span></code></pre></div>
 <p>We can now calculate conditional response probability as a function of distance bin using <code>distance_crp</code>, to examine how response probability varies with semantic distance.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dist_crp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distance_crp.html">distance_crp</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"item_index"</span>, <span class="va">d</span><span class="op">$</span><span class="va">distances</span>, <span class="va">edges</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dist_crp</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject    center       prob actual possible</span></span>
@@ -369,7 +391,7 @@
 <h3 id="distance-rank">Distance rank<a class="anchor" aria-label="anchor" href="#distance-rank"></a>
 </h3>
 <p>Similarly to the lag rank analysis of temporal clustering, we can summarize distance-based clustering (such as semantic clustering) with a single rank measure. The distance rank varies from 0 (the most-distant item is always recalled) to 1 (the closest item is always recalled), with chance clustering corresponding to 0.5. Given a matrix of item distances, we can calculate distance rank using <code>distance_rank</code>.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ranks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distance_rank.html">distance_rank</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"item_index"</span>, <span class="va">d</span><span class="op">$</span><span class="va">distances</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ranks</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject      rank</span></span>
@@ -385,7 +407,7 @@
 </h3>
 <p>Like with the compound lag-CRP, we can also examine how recalls before the just-previous one may predict subsequent recalls. To examine whether distances relative to earlier items are predictive of the next recall, we can use a shifted distance rank analysis using <code>distance_rank_shifted</code>.</p>
 <p>Here, to account for the category structure of the list, we will only include within-category transitions.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ranks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distance_rank_shifted.html">distance_rank_shifted</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"item_index"</span>, <span class="va">d</span><span class="op">$</span><span class="va">distances</span>, <span class="fl">4</span>, test_key <span class="op">=</span> <span class="st">"category"</span>, test <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="va">x</span> <span class="op">==</span> <span class="va">y</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ranks</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subject shift      rank</span></span>
