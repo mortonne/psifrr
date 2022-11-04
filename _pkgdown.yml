@@ -48,4 +48,4 @@ reference:
   desc: >
     General statistics.
   contents:
-  - group_stats
+  - boot_ci
