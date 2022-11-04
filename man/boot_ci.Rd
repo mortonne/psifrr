@@ -30,5 +30,7 @@ results <- spc(data)
 # Calculate statistics grouped by input (serial) position
 library(magrittr)
 library(dplyr)
-results \%>\% group_by(input) \%>\% summarise(boot_ci(recall))
+results \%>\%
+  group_by(input) \%>\%
+  summarise(boot_ci(recall))
 }
