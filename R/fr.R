@@ -824,19 +824,17 @@ boot_fn <- function(x, i) {
 }
 
 
-#' Group statistics
+#' Bootstrap CI
 #'
-#' Mean and confidence interval for each group.
+#' Mean and bootstrap confidence interval.
 #'
-#' @param results Data frame with results of an analysis.
-#' @param stat Column to use when calculating statistics.
-#' @param ... Columns to group by.
+#' @param stat Vector of observations for some statistic.
 #' @param ci Confidence interval in percentile units.
 #' @param R Number of bootstrap iterations to use when calculating statistics.
 #'
-#' @return Results with additional `mean`, `lower`, and `upper` columns
-#'   indicating the mean statistic and the lower and upper bounds of the CI
-#'   based on a bootstrap procedure.
+#' @return Results with `mean`, `lower`, and `upper` columns indicating the mean
+#'    statistic and the lower and upper bounds of the CI based on a bootstrap
+#'    procedure.
 #'
 #' @export
 #' @examples
@@ -846,15 +844,18 @@ boot_fn <- function(x, i) {
 #' results <- spc(data)
 #'
 #' # Calculate statistics grouped by input (serial) position
-#' group_stats(results, recall, input)
+#' library(magrittr)
+#' library(dplyr)
+#' results %>%
+#'   group_by(input) %>%
+#'   summarise(boot_ci(recall))
 #' @importFrom rlang .data
 #' @importFrom magrittr %>%
-group_stats <- function(results, stat, ..., ci = 95, R = 1000) {
-  results %>%
-    dplyr::group_by(...) %>%
+boot_ci <- function(stat, ci = 95, R = 1000) {
+  tibble::tibble(stat = stat) %>%
     dplyr::summarise(
-      mean = mean({{ stat }}, na.rm = TRUE),
-      bsamples = list(boot::boot({{ stat }}, boot_fn, R = R))
+      mean = mean(stat, na.rm = TRUE),
+      bsamples = list(boot::boot(stat, boot_fn, R = R))
     ) %>%
     dplyr::mutate(bs = lapply(.data$bsamples, percentile, ci = ci)) %>%
     dplyr::select(-.data$bsamples) %>%
