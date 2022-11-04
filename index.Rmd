@@ -73,12 +73,16 @@ recall <- spc(data)
 head(recall)
 ```
 
-Next, we can calculate statistics for each serial position using `group_stats`.
+Next, we can calculate statistics for each serial position using `boot_ci`.
 We'll take the `recall` statistic, group by `input` position, and calculate the
 mean and 95% bootstrap confidence interval for each position.
 
 ```{r}
-stats <- group_stats(recall, recall, input, ci = 95)
+library(dplyr, warn.conflicts = FALSE)
+library(magrittr)
+stats <- recall %>%
+  group_by(input) %>% 
+  summarise(boot_ci(recall), .groups = "drop")
 head(stats)
 ```
 

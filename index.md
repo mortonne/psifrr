@@ -144,22 +144,26 @@ head(recall)
 ```
 
 Next, we can calculate statistics for each serial position using
-`group_stats`. We’ll take the `recall` statistic, group by `input`
-position, and calculate the mean and 95% bootstrap confidence interval
-for each position.
+`boot_ci`. We’ll take the `recall` statistic, group by `input` position,
+and calculate the mean and 95% bootstrap confidence interval for each
+position.
 
 ``` r
-stats <- group_stats(recall, recall, input, ci = 95)
+library(dplyr, warn.conflicts = FALSE)
+library(magrittr)
+stats <- recall %>%
+  group_by(input) %>% 
+  summarise(boot_ci(recall), .groups = "drop")
 head(stats)
 #> # A tibble: 6 × 4
 #>   input  mean lower upper
 #>   <dbl> <dbl> <dbl> <dbl>
-#> 1     1 0.565 0.519 0.610
-#> 2     2 0.505 0.461 0.551
-#> 3     3 0.479 0.443 0.523
-#> 4     4 0.443 0.407 0.476
-#> 5     5 0.458 0.420 0.498
-#> 6     6 0.449 0.417 0.482
+#> 1     1 0.565 0.518 0.611
+#> 2     2 0.505 0.457 0.551
+#> 3     3 0.479 0.436 0.519
+#> 4     4 0.443 0.410 0.478
+#> 5     5 0.458 0.422 0.498
+#> 6     6 0.449 0.415 0.480
 ```
 
 We can then plot the serial position curve with a confidence band using
