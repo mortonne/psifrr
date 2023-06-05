@@ -1,3 +1,7 @@
+# psifrr 0.4.0
+
+* Now uses the latest version of Psifr from PyPI instead of a branch on GitHub.
+
 # psifrr 0.3.0
 
 * Support for calculating bootstrap confidence intervals has been added.
